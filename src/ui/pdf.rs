@@ -9,6 +9,22 @@ pub fn generate_pdf(s: &AppState, i18n: &dyn UiI18n) {
 
     let js = format!(
         r#"(async function() {{
+            function loadScript(url) {{
+                return new Promise(function(resolve, reject) {{
+                    if (document.querySelector('script[src="' + url + '"]')) {{
+                        resolve();
+                        return;
+                    }}
+                    var s = document.createElement('script');
+                    s.src = url;
+                    s.onload = resolve;
+                    s.onerror = reject;
+                    document.head.appendChild(s);
+                }});
+            }}
+            if (typeof jspdf === 'undefined') {{
+                await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js');
+            }}
             var div = document.createElement('div');
             div.innerHTML = "{escaped}";
             div.style.position = 'absolute';
