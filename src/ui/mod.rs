@@ -1,4 +1,5 @@
 pub mod i18n;
+pub mod pdf;
 pub mod state;
 pub mod tabs;
 pub mod view;

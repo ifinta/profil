@@ -117,6 +117,9 @@ impl UiI18n for HungarianUi {
         }
     }
 
+    fn btn_generate_pdf(&self) -> &'static str { "PDF generálás" }
+    fn pdf_filter_choices(&self) -> &'static str { "Kiválasztott szűrők" }
+
     fn toast_update_available(&self) -> &'static str { "Új verzió érhető el!" }
     fn btn_update_now(&self) -> &'static str { "Frissítés" }
 }

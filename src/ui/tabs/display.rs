@@ -1,6 +1,7 @@
 use dioxus::prelude::*;
 use crate::ui::state::AppState;
 use crate::ui::i18n::UiI18n;
+use crate::ui::pdf;
 
 pub fn render_display_tab(s: AppState, i18n: &dyn UiI18n) -> Element {
     let skills = s.selected_skills.read().clone();
@@ -24,7 +25,20 @@ pub fn render_display_tab(s: AppState, i18n: &dyn UiI18n) -> Element {
         };
     }
 
+    let pdf_label = i18n.btn_generate_pdf().to_string();
+
     rsx! {
+        // Generate PDF button
+        div { style: "text-align: right; margin-bottom: 14px;",
+            button {
+                style: "padding: 8px 20px; font-size: 0.9em; font-weight: 600; color: white; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; border-radius: 8px; cursor: pointer; box-shadow: 0 2px 8px rgba(102,126,234,0.3);",
+                onclick: move |_| {
+                    pdf::generate_pdf(&s, crate::ui::i18n::ui_i18n(*s.language.read()).as_ref());
+                },
+                "\u{1F4C4} {pdf_label}"
+            }
+        }
+
         if !skills.is_empty() {
             {render_display_section(i18n, i18n.section_skills(), &skills, "#667eea")}
         }
