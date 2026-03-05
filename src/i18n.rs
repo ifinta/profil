@@ -1,7 +1,7 @@
 #[derive(Clone, Copy, PartialEq, Default)]
 pub enum Language {
-    #[default]
     English,
+    #[default]
     Hungarian,
     German,
 }

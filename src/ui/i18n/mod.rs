@@ -40,6 +40,10 @@ pub trait UiI18n {
 
     // Hints for filter items
     fn item_hint(&self, key: &str) -> &'static str;
+
+    // Toast / SW update
+    fn toast_update_available(&self) -> &'static str;
+    fn btn_update_now(&self) -> &'static str;
 }
 
 /// Factory function

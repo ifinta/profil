@@ -8,10 +8,10 @@ impl UiI18n for HungarianUi {
     fn tab_display(&self) -> &'static str { "Megjelenítés" }
 
     fn profile_name(&self) -> &'static str { "Finta István" }
-    fn profile_title(&self) -> &'static str { "Szenior szoftvermérnök" }
-    fn profile_location(&self) -> &'static str { "Salzburg, Ausztria" }
-    fn profile_email(&self) -> &'static str { "ifinta@gmail.com" }
-    fn profile_phone(&self) -> &'static str { "+43 660 7679962" }
+    fn profile_title(&self) -> &'static str { "Szoftvermérnök" }
+    fn profile_location(&self) -> &'static str { "Magyarország" }
+    fn profile_email(&self) -> &'static str { "istvan_finta@yahoo.com" }
+    fn profile_phone(&self) -> &'static str { "+36 70 343 9517" }
     fn profile_about(&self) -> &'static str { "Rólam" }
     fn profile_about_text(&self) -> &'static str {
         "Tapasztalt szoftvermérnök, több mint 30 éves iparági tapasztalattal. \
@@ -116,4 +116,7 @@ impl UiI18n for HungarianUi {
             _ => "",
         }
     }
+
+    fn toast_update_available(&self) -> &'static str { "Új verzió érhető el!" }
+    fn btn_update_now(&self) -> &'static str { "Frissítés" }
 }

@@ -19,7 +19,7 @@ pub fn render_app(s: AppState) -> Element {
             // Tab content (scrollable area)
             div { style: "flex: 1; overflow-y: auto; padding: 20px 30px 90px;",
                 match active {
-                    Tab::Profile => profile::render_profile_tab(i18n.as_ref()),
+                    Tab::Profile => profile::render_profile_tab(s, i18n.as_ref()),
                     Tab::Filter => filter::render_filter_tab(s, i18n.as_ref()),
                     Tab::Display => display::render_display_tab(s, i18n.as_ref()),
                 }

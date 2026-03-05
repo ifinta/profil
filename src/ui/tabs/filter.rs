@@ -1,39 +1,11 @@
 use dioxus::prelude::*;
-use crate::i18n::Language;
 use crate::ui::state::{
     AppState, SKILL_KEYS, COUNTRY_KEYS, LANGUAGE_KEYS, COMPANY_KEYS, CERTIFICATE_KEYS,
 };
 use crate::ui::i18n::UiI18n;
 
 pub fn render_filter_tab(s: AppState, i18n: &dyn UiI18n) -> Element {
-    let lang = *s.language.read();
-    let lang_value = match lang {
-        Language::English => "en",
-        Language::Hungarian => "hu",
-        Language::German => "de",
-    };
-
     rsx! {
-        // Language selector combobox
-        div { style: "margin-bottom: 20px;",
-            select {
-                style: "width: 100%; padding: 10px 14px; border: 2px solid #667eea; border-radius: 8px; font-size: 1em; color: #333; background: white; cursor: pointer; font-weight: 600;",
-                value: "{lang_value}",
-                onchange: move |evt| {
-                    let lang = match evt.value().as_str() {
-                        "hu" => Language::Hungarian,
-                        "de" => Language::German,
-                        _ => Language::English,
-                    };
-                    let mut language = s.language;
-                    language.set(lang);
-                },
-                option { value: "en", selected: lang == Language::English, "English" }
-                option { value: "hu", selected: lang == Language::Hungarian, "Magyar" }
-                option { value: "de", selected: lang == Language::German, "Deutsch" }
-            }
-        }
-
         // Skills section
         {render_section(s, i18n, i18n.section_skills(), SKILL_KEYS, SectionKind::Skills)}
 

@@ -8,10 +8,10 @@ impl UiI18n for EnglishUi {
     fn tab_display(&self) -> &'static str { "Display" }
 
     fn profile_name(&self) -> &'static str { "István Finta" }
-    fn profile_title(&self) -> &'static str { "Senior Software Engineer" }
-    fn profile_location(&self) -> &'static str { "Salzburg, Austria" }
-    fn profile_email(&self) -> &'static str { "ifinta@gmail.com" }
-    fn profile_phone(&self) -> &'static str { "+43 660 7679962" }
+    fn profile_title(&self) -> &'static str { "Software Engineer" }
+    fn profile_location(&self) -> &'static str { "Hungary" }
+    fn profile_email(&self) -> &'static str { "istvan_finta@yahoo.com" }
+    fn profile_phone(&self) -> &'static str { "+36 70 343 9517" }
     fn profile_about(&self) -> &'static str { "About me" }
     fn profile_about_text(&self) -> &'static str {
         "Experienced software engineer with 30+ years in the industry. \
@@ -121,4 +121,7 @@ impl UiI18n for EnglishUi {
             _ => "",
         }
     }
+
+    fn toast_update_available(&self) -> &'static str { "A new version is available!" }
+    fn btn_update_now(&self) -> &'static str { "Update Now" }
 }
