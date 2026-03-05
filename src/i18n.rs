@@ -3,7 +3,5 @@ pub enum Language {
     #[default]
     English,
     Hungarian,
-    French,
     German,
-    Spanish,
 }

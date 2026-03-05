@@ -1,22 +1,14 @@
 [package]
-name = "ifinta"
+name = "profil"
 version = "0.1.0"
 edition = "2024"
 
 [features]
 default = ["web"]
-web = ["dioxus/web", "dep:web-sys", "dep:wasm-bindgen", "dep:js-sys", "dep:gloo-timers", "dep:wasm-bindgen-futures", "getrandom/wasm_js"]
+web = ["dioxus/web"]
 
 [dependencies]
-# === UI Framework ===
 dioxus = "0.7.3"
-
-# === Platform / Web ===
-web-sys = { version = "0.3", features = ["Window", "Storage", "Navigator", "Clipboard"], optional = true }
-wasm-bindgen = { version = "0.2", optional = true }
-wasm-bindgen-futures = { version = "0.4", optional = true }
-#js-sys = { version = "0.3", optional = true }
-#gloo-timers = { version = "0.3", features = ["futures"], optional = true }
 
 [profile.release]
 opt-level = "z"

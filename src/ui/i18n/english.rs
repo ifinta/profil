@@ -3,121 +3,122 @@ use super::UiI18n;
 pub struct EnglishUi;
 
 impl UiI18n for EnglishUi {
-    // Initial signal values
-    fn no_key_loaded(&self) -> &'static str { "No key loaded" }
-    fn copy_label(&self) -> &'static str { "Copy" }
-    fn copy_xdr_label(&self) -> &'static str { "Copy XDR" }
-    fn waiting(&self) -> &'static str { "Waiting..." }
-    
-    // Status messages
-    fn err_no_generated_xdr(&self) -> &'static str { "Error: No generated XDR!" }
-    fn submitting(&self) -> &'static str { "Submitting..." }
-    fn calling_faucet(&self) -> &'static str { "🚀 Calling faucet..." }
-    fn no_loaded_key(&self) -> &'static str { "⚠️ No loaded key!" }
-    fn fetching_sequence(&self) -> &'static str { "🔍 Fetching sequence number..." }
-    
-    // Console/println messages
-    fn clipboard_cleared(&self) -> &'static str { "🔐 Clipboard cleared for security." }
-    fn save_success(&self) -> &'static str { "✅ Successfully saved to system wallet!" }
-    fn nothing_to_save(&self) -> &'static str { "⚠️ Nothing to save (key is empty)!" }
-    fn loading_started(&self) -> &'static str { "🔍 Loading started..." }
-    fn key_loaded_len(&self, len: usize) -> String { format!("📥 Key loaded, length: {}", len) }
-    fn ui_updated_with_key(&self) -> &'static str { "✨ UI successfully updated with loaded key." }
-    
-    // Format helpers
-    fn fmt_success(&self, msg: &str) -> String { format!("✅ SUCCESS! {}", msg) }
-    fn fmt_error(&self, e: &str) -> String { format!("❌ {}", e) }
-    fn fmt_xdr_ready(&self, net: &str, seq: i64) -> String { format!("✅ XDR Ready! [{}] (Seq: {})", net, seq) }
-    
-    // Button labels
-    fn btn_new_key(&self) -> &'static str { "✨ New Key" }
-    fn btn_import(&self) -> &'static str { "📥 Import" }
-    fn btn_hide_secret(&self) -> &'static str { "🙈 Hide" }
-    fn btn_reveal_secret(&self) -> &'static str { "👁 Reveal" }
-    fn btn_activate_faucet(&self) -> &'static str { "🚀 Activate (Faucet)" }
-    fn btn_save_to_os(&self) -> &'static str { "💾 Save to OS Wallet" }
-    fn btn_load(&self) -> &'static str { "🔓 Load" }
-    fn btn_generate_xdr(&self) -> &'static str { "🛠 Generate Transaction XDR" }
-    fn btn_submit_tx(&self) -> &'static str { "🚀 SUBMIT Transaction" }
-    
-    // UI labels
-    fn lbl_active_address(&self) -> &'static str { "Active Address (Public Key):" }
-    fn lbl_signed_xdr(&self) -> &'static str { "SIGNED XDR:" }
-    fn lbl_import_ph(&self) -> &'static str { "Import (S...)" }
-    
-    // Network labels
-    fn net_testnet_label(&self) -> &'static str { "🧪 Testnet ⚠️" }
-    fn net_mainnet_label(&self) -> &'static str { "Mainnet" }
-    
-    // Clipboard
-    fn copied(&self) -> &'static str { "COPIED!" }
-    fn clipboard_modal_text(&self) -> &'static str { "The content has been copied to the clipboard. When you close this dialog, the clipboard will be cleared for security." }
-    fn btn_clear_clipboard(&self) -> &'static str { "🗑️ Clear clipboard content" }
+    fn tab_profile(&self) -> &'static str { "Profile" }
+    fn tab_filter(&self) -> &'static str { "Filter" }
+    fn tab_display(&self) -> &'static str { "Display" }
 
-    // Tab labels
-    fn tab_home(&self) -> &'static str { "Home" }
-    fn tab_networking(&self) -> &'static str { "Network" }
-    fn tab_info(&self) -> &'static str { "Info" }
-    fn tab_settings(&self) -> &'static str { "Settings" }
+    fn profile_name(&self) -> &'static str { "István Finta" }
+    fn profile_title(&self) -> &'static str { "Senior Software Engineer" }
+    fn profile_location(&self) -> &'static str { "Salzburg, Austria" }
+    fn profile_email(&self) -> &'static str { "ifinta@gmail.com" }
+    fn profile_phone(&self) -> &'static str { "+43 660 7679962" }
+    fn profile_about(&self) -> &'static str { "About me" }
+    fn profile_about_text(&self) -> &'static str {
+        "Experienced software engineer with 30+ years in the industry. \
+         Expertise in embedded systems, desktop and web applications, \
+         test automation and project management. Worked across Hungary, \
+         Germany and Austria in automotive, traffic control, medical imaging, \
+         financial software and blockchain domains."
+    }
 
-    // Start gate modal
-    fn gate_title(&self) -> &'static str { "Welcome to Zsozso" }
-    fn btn_next(&self) -> &'static str { "Next" }
+    fn section_skills(&self) -> &'static str { "Technical Skills" }
+    fn section_countries(&self) -> &'static str { "Countries" }
+    fn section_languages(&self) -> &'static str { "Language Skills" }
+    fn section_companies(&self) -> &'static str { "Companies" }
+    fn section_certificates(&self) -> &'static str { "Certificates" }
+    fn filter_select_all(&self) -> &'static str { "Select all" }
+    fn filter_clear_all(&self) -> &'static str { "Clear all" }
 
-    // Passkey authentication
-    fn authenticating(&self) -> &'static str { "Authenticating..." }
-    fn auth_failed(&self) -> &'static str { "Authentication failed" }
-    fn btn_exit(&self) -> &'static str { "Exit now" }
-    fn no_prf_key(&self) -> &'static str { "No passkey encryption key available. Re-authenticate first." }
+    fn display_nothing_selected(&self) -> &'static str { "Select items on the Filter tab to see details here." }
 
-    // Info tab
-    fn info_public_key_label(&self) -> &'static str { "Your Public Key" }
-    fn info_no_key(&self) -> &'static str { "No key loaded. Generate or import one in Settings." }
+    fn item_label(&self, key: &str) -> &'static str {
+        match key {
+            // Skills
+            "c_embedded" => "C (embedded)",
+            "c_win_gui" => "C (Windows/GUI)",
+            "cpp_win_gui" => "C++ (Windows/GUI)",
+            "cpp_linux_server" => "C++ (Linux/Server)",
+            "csharp" => "C#",
+            "sql" => "SQL",
+            "rust" => "Rust / WebAssembly",
+            "multimedia" => "Multimedia Programming",
+            "system_design" => "System Design",
+            "project_management" => "Project Management",
+            "test_management" => "Test Management",
+            "automated_testing" => "Automated Testing",
+            "manual_testing" => "Manual Testing",
+            "erp" => "ERP Systems",
+            "administration" => "System Administration",
+            // Countries
+            "hungary" => "Hungary",
+            "germany" => "Germany",
+            "austria" => "Austria",
+            // Languages
+            "lang_hungarian" => "Hungarian (native)",
+            "lang_german" => "German (fluent)",
+            "lang_english" => "English (fluent)",
+            // Companies
+            "mol" => "MOL AG (1993)",
+            "bako" => "Bäko-Hungaria (1993)",
+            "teamcom" => "Teamcom (1995–2001)",
+            "vilati" => "Vilati (2001–2005)",
+            "mediso" => "Mediso (2005)",
+            "bosch" => "Bosch (2005–2010)",
+            "porsche" => "Porsche Informatik (2010–2016)",
+            "sigmatek" => "Sigmatek (2016)",
+            "bitnok" => "Bitnök (2016–2022)",
+            "telekom" => "Telekom (2022–)",
+            // Certificates
+            "cert_diploma" => "University Diploma",
+            "cert_pm" => "PM Certificate (PMCC)",
+            "cert_sql" => "Database & SQL Fundamentals",
+            "cert_js" => "JavaScript Certificate",
+            "cert_ai" => "Programming with AI Agents",
+            "cert_driving" => "Advanced Driving Technique",
+            _ => "",
+        }
+    }
 
-    // Networking tab / Smart Contract
-    fn btn_ping(&self) -> &'static str { "\u{1F3D3} Ping" }
-    fn ping_calling(&self) -> &'static str { "\u{1F4E1} Calling contract..." }
-    fn ping_success(&self, msg: &str) -> String { format!("\u{2705} {}", msg) }
-    fn ping_error(&self, e: &str) -> String { format!("\u{274C} {}", e) }
-    fn ping_no_key(&self) -> &'static str { "\u{26A0}\u{FE0F} Load a key first (Settings tab)." }
-
-    // QR Scanner
-    fn btn_scan_qr(&self) -> &'static str { "\u{1F4F7} Scan QR" }
-    fn scan_scanning(&self) -> &'static str { "\u{1F4F7} Scanning..." }
-    fn scan_success(&self, key: &str) -> String { format!("\u{2705} Scanned: {}", key) }
-    fn scan_error(&self, e: &str) -> String { format!("\u{274C} Scan failed: {}", e) }
-
-    // Log tab
-    fn tab_log(&self) -> &'static str { "Log" }
-    fn log_refresh(&self) -> &'static str { "\u{1F504} Refresh" }
-    fn log_clear(&self) -> &'static str { "\u{1F5D1} Clear" }
-    fn log_upload(&self) -> &'static str { "\u{2B06}\u{FE0F} Upload" }
-    fn log_uploading(&self) -> &'static str { "Uploading..." }
-    fn log_upload_ok(&self) -> &'static str { "\u{2705} Log uploaded" }
-    fn log_upload_fail(&self, e: &str) -> String { format!("\u{274C} Upload failed: {}", e) }
-    fn log_upload_empty(&self) -> &'static str { "\u{26A0}\u{FE0F} Log is empty" }
-
-    // Update toast
-    fn toast_update_available(&self) -> &'static str { "\u{1F680} A new version of Zsozso is available!" }
-    fn btn_update_now(&self) -> &'static str { "Update Now" }
-
-    // Info tab – version
-    fn info_version(&self, ver: &str) -> String { format!("Version: {}", ver) }
-
-    // Network switch modal
-    fn network_switch_save_prompt(&self) -> &'static str { "You have a secret key loaded. Would you like to save it before switching networks?" }
-    fn btn_save_and_switch(&self) -> &'static str { "\u{1F4BE} Save & Switch" }
-    fn btn_switch_and_save(&self) -> &'static str { "\u{1F504} Switch & Save" }
-    fn btn_switch_without_saving(&self) -> &'static str { "Switch without saving" }
-    fn btn_cancel(&self) -> &'static str { "Cancel" }
-
-    // SEA key generation modal
-    fn btn_generate_db_secret(&self) -> &'static str { "\u{1F511} Generate DB Secret" }
-    fn sea_modal_title(&self) -> &'static str { "Generate GunDB SEA Keys" }
-    fn sea_modal_placeholder(&self) -> &'static str { "Enter secret passphrase..." }
-    fn btn_generate_db_keys(&self) -> &'static str { "\u{1F511} Generate DB Keys" }
-    fn sea_generating(&self) -> &'static str { "\u{1F504} Generating keys..." }
-    fn sea_keys_generated(&self) -> &'static str { "\u{2705} SEA keys generated and loaded into memory." }
-    fn sea_generation_error(&self, e: &str) -> String { format!("\u{274C} Key generation failed: {}", e) }
-    fn btn_close(&self) -> &'static str { "Close" }
+    fn item_hint(&self, key: &str) -> &'static str {
+        match key {
+            "c_embedded" => "Microcontroller firmware for traffic systems & automotive ECUs",
+            "c_win_gui" => "Windows desktop applications in C",
+            "cpp_win_gui" => "Windows GUI applications in C++",
+            "cpp_linux_server" => "Linux server-side development in C++",
+            "csharp" => "C# (.NET) — test tools, ERP, Prüfloader",
+            "sql" => "Database queries, stored procedures",
+            "rust" => "Rust + Dioxus + WebAssembly for web apps",
+            "multimedia" => "Multimedia & interactive presentations",
+            "system_design" => "Architecture & system design for traffic control",
+            "project_management" => "Leading teams and managing projects",
+            "test_management" => "Test strategy, planning and reporting",
+            "automated_testing" => "Automated HW/SW test development",
+            "manual_testing" => "Functional & regression testing",
+            "erp" => "Enterprise resource planning systems",
+            "administration" => "System & network administration",
+            "hungary" => "Vilati, Mediso, MOL, Bäko-Hungaria, Bitnök, Telekom",
+            "germany" => "Teamcom, Bosch",
+            "austria" => "Porsche Informatik, Sigmatek",
+            "lang_hungarian" => "Native language",
+            "lang_german" => "Working language since 1995",
+            "lang_english" => "Professional proficiency",
+            "mol" => "Laboratory system administration",
+            "bako" => "ERP system administration",
+            "teamcom" => "Financial multimedia software — Deutsche Bank, Citibank, C&L",
+            "vilati" => "Traffic junction control, embedded C, department leadership",
+            "mediso" => "Medical image processing",
+            "bosch" => "Automotive ECU development & test — Body Computers, Window Lifters",
+            "porsche" => "Dealer management systems — C++ Linux/Windows, SQL",
+            "sigmatek" => "Prüfloader.NET — industrial test tool in C#",
+            "bitnok" => "Blockchain project management — VortexLedger",
+            "telekom" => "GIS / GeoRoute administration",
+            "cert_diploma" => "University degree in engineering",
+            "cert_pm" => "Project Management Certificate — PMCC",
+            "cert_sql" => "Database and SQL fundamentals course",
+            "cert_js" => "JavaScript development certificate",
+            "cert_ai" => "Programming with AI agents course",
+            "cert_driving" => "Advanced driving technique for safety",
+            _ => "",
+        }
+    }
 }

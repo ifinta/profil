@@ -1,65 +1,52 @@
 use dioxus::prelude::*;
-use zeroize::Zeroizing;
-use crate::ledger::NetworkEnvironment;
 use crate::i18n::Language;
-use crate::db::gundb::SeaKeyPair;
-use super::status::TxStatus;
 use super::tabs::Tab;
 
-/// Passkey authentication state machine.
-#[derive(Clone, Copy, PartialEq, Default)]
-pub enum AuthState {
-    #[default]
-    Pending,        // gate modal shown, waiting for user to click
-    Authenticating, // passkey dialog in progress
-    Authenticated,  // success — show app tabs
-    Failed,         // terminal — show error modal
-}
+/// All checkbox item keys used across filters.
+/// Each key is a &'static str that the i18n trait can translate.
+pub const SKILL_KEYS: &[&str] = &[
+    "c_embedded", "c_win_gui", "cpp_win_gui", "cpp_linux_server",
+    "csharp", "sql", "rust", "multimedia",
+    "system_design", "project_management", "test_management",
+    "automated_testing", "manual_testing", "erp", "administration",
+];
+
+pub const COUNTRY_KEYS: &[&str] = &[
+    "hungary", "germany", "austria",
+];
+
+pub const LANGUAGE_KEYS: &[&str] = &[
+    "lang_hungarian", "lang_german", "lang_english",
+];
+
+pub const COMPANY_KEYS: &[&str] = &[
+    "mol", "bako", "teamcom", "vilati", "mediso",
+    "bosch", "porsche", "sigmatek", "bitnok", "telekom",
+];
+
+pub const CERTIFICATE_KEYS: &[&str] = &[
+    "cert_diploma", "cert_pm", "cert_sql", "cert_js", "cert_ai", "cert_driving",
+];
 
 #[derive(Clone, Copy)]
-pub struct WalletState {
+pub struct AppState {
     pub language: Signal<Language>,
-    pub public_key: Signal<Option<String>>,
-    pub secret_key_hidden: Signal<Option<Zeroizing<String>>>,
-    pub show_secret: Signal<bool>,
-    pub input_value: Signal<String>,
-    pub generated_xdr: Signal<String>,
-    pub submission_status: Signal<TxStatus>,
-    pub current_network: Signal<NetworkEnvironment>,
-    pub clipboard_modal_open: Signal<bool>,
     pub active_tab: Signal<Tab>,
-    pub auth_state: Signal<AuthState>,
-    pub prf_key: Signal<Option<String>>,
-    pub ping_status: Signal<Option<String>>,
-    /// When Some, shows a modal asking the user to save the secret before switching network.
-    /// The value is the target network the user wants to switch to.
-    pub network_switch_pending: Signal<Option<NetworkEnvironment>>,
-    /// Whether the SEA key generation modal is open.
-    pub sea_modal_open: Signal<bool>,
-    /// Input value for the SEA secret passphrase (kept only in memory).
-    pub sea_modal_input: Signal<Zeroizing<String>>,
-    /// Generated SEA key pair (kept only in memory, never persisted).
-    pub sea_key_pair: Signal<Option<SeaKeyPair>>,
+    pub selected_skills: Signal<Vec<&'static str>>,
+    pub selected_countries: Signal<Vec<&'static str>>,
+    pub selected_languages: Signal<Vec<&'static str>>,
+    pub selected_companies: Signal<Vec<&'static str>>,
+    pub selected_certificates: Signal<Vec<&'static str>>,
 }
 
-pub fn use_wallet_state() -> WalletState {
-    WalletState {
+pub fn use_app_state() -> AppState {
+    AppState {
         language: use_signal(Language::default),
-        public_key: use_signal(|| None),
-        secret_key_hidden: use_signal(|| None),
-        show_secret: use_signal(|| false),
-        input_value: use_signal(String::new),
-        generated_xdr: use_signal(String::new),
-        submission_status: use_signal(|| TxStatus::Waiting),
-        current_network: use_signal(|| NetworkEnvironment::Production),
-        clipboard_modal_open: use_signal(|| false),
         active_tab: use_signal(Tab::default),
-        auth_state: use_signal(AuthState::default),
-        prf_key: use_signal(|| None),
-        ping_status: use_signal(|| None),
-        network_switch_pending: use_signal(|| None),
-        sea_modal_open: use_signal(|| false),
-        sea_modal_input: use_signal(|| Zeroizing::new(String::new())),
-        sea_key_pair: use_signal(|| None),
+        selected_skills: use_signal(Vec::new),
+        selected_countries: use_signal(Vec::new),
+        selected_languages: use_signal(Vec::new),
+        selected_companies: use_signal(Vec::new),
+        selected_certificates: use_signal(Vec::new),
     }
 }
