@@ -2,54 +2,31 @@ use dioxus::prelude::*;
 use crate::ui::state::AppState;
 use crate::ui::i18n::UiI18n;
 
-/// Build the PDF HTML content and trigger download via jsPDF + html2canvas.
+/// Build a styled HTML document and open the browser's Print dialog
+/// so the user can save it as PDF (no external libraries needed).
 pub fn generate_pdf(s: &AppState, i18n: &dyn UiI18n) {
-    let html = build_pdf_html(s, i18n);
-    let escaped = escape_for_js(&html);
+    let body = build_pdf_html(s, i18n);
+    let escaped = escape_for_js(&body);
 
     let js = format!(
-        r#"(async function() {{
-            function loadScript(url) {{
-                return new Promise(function(resolve, reject) {{
-                    if (document.querySelector('script[src="' + url + '"]')) {{
-                        resolve();
-                        return;
-                    }}
-                    var s = document.createElement('script');
-                    s.src = url;
-                    s.onload = resolve;
-                    s.onerror = reject;
-                    document.head.appendChild(s);
-                }});
-            }}
-            if (typeof jspdf === 'undefined') {{
-                await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js');
-            }}
-            var div = document.createElement('div');
-            div.innerHTML = "{escaped}";
-            div.style.position = 'absolute';
-            div.style.left = '-9999px';
-            div.style.top = '0';
-            div.style.width = '800px';
-            div.style.fontFamily = 'sans-serif';
-            document.body.appendChild(div);
-            try {{
-                var doc = new jspdf.jsPDF('p', 'mm', 'a4');
-                await doc.html(div, {{
-                    x: 8,
-                    y: 8,
-                    width: 190,
-                    windowWidth: 800,
-                    margin: [8, 8, 8, 8],
-                    autoPaging: 'text'
-                }});
-                doc.save('profile.pdf');
-            }} catch(e) {{
-                console.error('PDF generation failed:', e);
-                alert('PDF generation failed. Please try again.');
-            }} finally {{
-                document.body.removeChild(div);
-            }}
+        r#"(function() {{
+            var w = window.open('', '_blank');
+            if (!w) {{ alert('Please allow pop-ups to generate PDF.'); return; }}
+            w.document.write('<!DOCTYPE html><html><head>' +
+                '<meta charset="UTF-8">' +
+                '<title>Profile</title>' +
+                '<style>' +
+                '@media print {{' +
+                '  body {{ margin: 0; padding: 12mm 14mm; }}' +
+                '  .no-print {{ display: none !important; }}' +
+                '}}' +
+                'body {{ font-family: sans-serif; margin: 0; padding: 20px 30px; color: #333; }}' +
+                '</style></head><body>' +
+                "{escaped}" +
+                '<div class="no-print" style="text-align:center; margin-top:20px;">' +
+                '<button onclick="window.print()" style="padding:10px 30px; font-size:1em; font-weight:600; color:#fff; background:linear-gradient(135deg,#667eea,#764ba2); border:none; border-radius:8px; cursor:pointer;">\u{{1F5A8}} Print / Save PDF</button>' +
+                '</div></body></html>');
+            w.document.close();
         }})()"#
     );
 
