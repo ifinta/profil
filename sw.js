@@ -1,5 +1,5 @@
 // Cache version — increment on every deploy so the old cache gets cleared
-const CACHE_NAME = 'zsozso-v2';
+const CACHE_NAME = 'ifinta-v0.1000-';
 
 // ── SW-side log ring buffer (max 100) ──
 const _swLogBuffer = [];
@@ -31,14 +31,14 @@ const ERR = (...args) => {
 // Forward log lines to the main page so the in-app Log tab can display them
 function _forward(text) {
     self.clients.matchAll({ type: 'window' }).then(clients => {
-        clients.forEach(c => c.postMessage({ type: '__ZSOZSO_SW_LOG', text: text }));
+        clients.forEach(c => c.postMessage({ type: '__IFINTA_SW_LOG', text: text }));
     });
 }
 
 LOG('Script evaluated');
 
 // We don't use a pre-cache list because Dioxus generates hashed filenames
-// (e.g. zsozso-dxhABC123.js) that change with every build.
+// (e.g. <project>-dxhABC123.js) that change with every build.
 // Instead we cache at runtime: files are cached on first load.
 
 self.addEventListener('message', event => {

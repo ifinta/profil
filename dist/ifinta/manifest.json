@@ -2,14 +2,14 @@
     "name": "Zsozso Wallet",
     "short_name": "Zsozso",
     "description": "Stellar wallet for the Iceberg Protocol ecosystem",
-    "id": "/app/",
-    "start_url": "/app/",
-    "scope": "/app/",
+    "id": "/ifinta/",
+    "start_url": "/ifinta/",
+    "scope": "/ifinta/",
     "display": "standalone",
     "orientation": "portrait",
     "background_color": "#ffffff",
     "theme_color": "#17a2b8",
-    "categories": ["finance", "utilities"],
+    "categories": ["utilities"],
     "icons": [
         {
             "src": "icon-192.png",
