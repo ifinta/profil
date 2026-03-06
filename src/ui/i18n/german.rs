@@ -29,10 +29,10 @@ impl UiI18n for GermanUi {
     fn filter_select_all(&self) -> &'static str { "Alle auswählen" }
     fn filter_clear_all(&self) -> &'static str { "Alle löschen" }
 
-    fn section_workplaces(&self) -> &'static str { "Arbeitsstellen" }
     fn section_job_roles(&self) -> &'static str { "Positionen" }
     fn section_projects(&self) -> &'static str { "Projekte" }
-    fn section_expertise(&self) -> &'static str { "Fachkenntnisse" }
+    fn section_tools(&self) -> &'static str { "Werkzeuge" }
+    fn section_project_experience(&self) -> &'static str { "Projekte – detailliert" }
 
     fn section_main_chars(&self) -> &'static str { "Meine Hauptmerkmale" }
     fn role_achievements_title(&self) -> &'static str { "Wichtigste Erfolge" }
@@ -66,6 +66,8 @@ impl UiI18n for GermanUi {
             "manual_testing" => "Manuelles Testen",
             "erp" => "ERP-Systeme",
             "administration" => "Systemadministration",
+            "leading" => "Leitung",
+            "auto_test_dev" => "Automatisierte-Test Entwicklung",
             "hungary" => "Ungarn",
             "germany" => "Deutschland",
             "austria" => "Österreich",
@@ -159,6 +161,32 @@ impl UiI18n for GermanUi {
             // Main Characteristics
             "mc_strengths" => "Stärken",
             "mc_achievements" => "Wichtigste Erfolge",
+            "mc_countries" => "Länder",
+            "mc_languages" => "Sprachkenntnisse",
+            "mc_certificates" => "Zertifikate",
+            // Tools
+            "tl_visual_studio" => "Visual Studio",
+            "tl_ms_office" => "MS Office (Excel, Word, Access)",
+            "tl_clearcase" => "IBM ClearCase",
+            "tl_clearquest" => "IBM ClearQuest",
+            "tl_doors" => "IBM Doors",
+            "tl_isystem" => "iSYSTEM Debugger",
+            "tl_dspace" => "dSPACE Testturm",
+            "tl_ni_teststand" => "NI TestStand",
+            "tl_ni_cvi" => "NI LabWindows/CVI",
+            "tl_agilent" => "Agilent Messgeräte",
+            "tl_opentest" => "OpenTest (Bosch/Vector)",
+            "tl_authors_dream" => "Author's Dream",
+            "tl_authorware" => "Macromedia Authorware",
+            "tl_python" => "Python",
+            "tl_snow" => "ServiceNow (SNOW)",
+            "tl_keil" => "Keil Compiler",
+            "tl_cosmic" => "Cosmic C Compiler",
+            "tl_gnu_cc" => "GNU C/C++ Toolchain",
+            "tl_tornado" => "Wind River Tornado IDE",
+            "tl_java_sdk" => "Sun Java SDK",
+            "tl_structured_text" => "Structured Text / LASAL",
+            "tl_node_js" => "Node.js",
             _ => "",
         }
     }
@@ -180,6 +208,8 @@ impl UiI18n for GermanUi {
             "manual_testing" => "Funktionale Tests & Regressionstests",
             "erp" => "Unternehmensressourcenplanung",
             "administration" => "System- und Netzwerkadministration",
+            "leading" => "Vilati — Abteilungsleitung Softwareentwicklung",
+            "auto_test_dev" => "Bosch — automatisierte Testtool-Entwicklung",
             "hungary" => "Vilati, Mediso, MOL, Bäko-Hungaria, Bitnök, Telekom",
             "germany" => "Teamcom, Bosch",
             "austria" => "Porsche Informatik, Sigmatek",
@@ -273,6 +303,32 @@ impl UiI18n for GermanUi {
             // Main Characteristics hints
             "mc_strengths" => "Fachkompetenz, Führung und Problemlösung",
             "mc_achievements" => "Test.NET, SK24 Synchronisation, Vortexledger",
+            "mc_countries" => "Ungarn, Deutschland, Österreich",
+            "mc_languages" => "Ungarisch, Deutsch, Englisch",
+            "mc_certificates" => "Diplom, PM, SQL, JavaScript, KI, Fahrtechnik",
+            // Tool hints
+            "tl_visual_studio" => "Bosch, Vilati, Teamcom, Mediso",
+            "tl_ms_office" => "Bosch — Dokumentation, Planung",
+            "tl_clearcase" => "Bosch — Versionskontrolle",
+            "tl_clearquest" => "Bosch — Fehlerverfolgung",
+            "tl_doors" => "Bosch — Anforderungsmanagement",
+            "tl_isystem" => "Bosch — Mikrocontroller-Debugging",
+            "tl_dspace" => "Bosch — HiL-Testen",
+            "tl_ni_teststand" => "Bosch — automatisiertes Testen",
+            "tl_ni_cvi" => "Bosch — halbautomatisches Testen",
+            "tl_agilent" => "Bosch — Messgeräte für Fensterheber-Test",
+            "tl_opentest" => "Bosch — automatisiertes Testtool (jetzt Vector)",
+            "tl_authors_dream" => "Teamcom — Multimedia-Editor",
+            "tl_authorware" => "Teamcom — Citibank Multimedia",
+            "tl_python" => "Bosch — TestDesigner-Skripte",
+            "tl_snow" => "Telekom — ITSM-Ticketing",
+            "tl_keil" => "Vilati — C167 Mikrocontroller-Compiler",
+            "tl_cosmic" => "Bosch — Automotive Mikrocontroller-Compiler",
+            "tl_gnu_cc" => "Vilati — OCIT-Firmware unter Linux",
+            "tl_tornado" => "Vilati — VxWorks Echtzeit-Entwicklung",
+            "tl_java_sdk" => "Vilati — Java Native Interface",
+            "tl_structured_text" => "Sigmatek — industrielle Steuerungsprogrammierung",
+            "tl_node_js" => "Bitnök — Open-Ledger-Tools",
             _ => "",
         }
     }

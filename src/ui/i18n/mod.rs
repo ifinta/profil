@@ -33,10 +33,14 @@ pub trait UiI18n {
     fn filter_clear_all(&self) -> &'static str;
 
     // Sankey-based filter sections
-    fn section_workplaces(&self) -> &'static str;
     fn section_job_roles(&self) -> &'static str;
     fn section_projects(&self) -> &'static str;
-    fn section_expertise(&self) -> &'static str;
+
+    // Tools section
+    fn section_tools(&self) -> &'static str;
+
+    // Project experience section header
+    fn section_project_experience(&self) -> &'static str;
 
     // "Főbb jellemzőim" (My Main Characteristics) group
     fn section_main_chars(&self) -> &'static str;

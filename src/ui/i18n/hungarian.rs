@@ -29,10 +29,10 @@ impl UiI18n for HungarianUi {
     fn filter_select_all(&self) -> &'static str { "Összes kijelölése" }
     fn filter_clear_all(&self) -> &'static str { "Összes törlése" }
 
-    fn section_workplaces(&self) -> &'static str { "Munkahelyek" }
     fn section_job_roles(&self) -> &'static str { "Munkakörök" }
     fn section_projects(&self) -> &'static str { "Projektek" }
-    fn section_expertise(&self) -> &'static str { "Szakmai ismeretek" }
+    fn section_tools(&self) -> &'static str { "Eszközök" }
+    fn section_project_experience(&self) -> &'static str { "Projektek – részletezve" }
 
     fn section_main_chars(&self) -> &'static str { "Főbb jellemzőim" }
     fn role_achievements_title(&self) -> &'static str { "Főbb eredmények" }
@@ -66,6 +66,8 @@ impl UiI18n for HungarianUi {
             "manual_testing" => "Kézi tesztelés",
             "erp" => "ERP rendszerek",
             "administration" => "Rendszeradminisztráció",
+            "leading" => "Vezetés",
+            "auto_test_dev" => "Automatizált-teszt fejlesztés",
             "hungary" => "Magyarország",
             "germany" => "Németország",
             "austria" => "Ausztria",
@@ -159,6 +161,32 @@ impl UiI18n for HungarianUi {
             // Main Characteristics
             "mc_strengths" => "Erősségek",
             "mc_achievements" => "Főbb eredmények",
+            "mc_countries" => "Országok",
+            "mc_languages" => "Nyelvtudás",
+            "mc_certificates" => "Bizonyítványok",
+            // Tools
+            "tl_visual_studio" => "Visual Studio",
+            "tl_ms_office" => "MS Office (Excel, Word, Access)",
+            "tl_clearcase" => "IBM ClearCase",
+            "tl_clearquest" => "IBM ClearQuest",
+            "tl_doors" => "IBM Doors",
+            "tl_isystem" => "iSYSTEM debugger",
+            "tl_dspace" => "dSPACE teszttorony",
+            "tl_ni_teststand" => "NI TestStand",
+            "tl_ni_cvi" => "NI LabWindows/CVI",
+            "tl_agilent" => "Agilent mérőműszerek",
+            "tl_opentest" => "OpenTest (Bosch/Vector)",
+            "tl_authors_dream" => "Author's Dream",
+            "tl_authorware" => "Macromedia Authorware",
+            "tl_python" => "Python",
+            "tl_snow" => "ServiceNow (SNOW)",
+            "tl_keil" => "Keil fordító",
+            "tl_cosmic" => "Cosmic C fordító",
+            "tl_gnu_cc" => "GNU C/C++ eszközkészlet",
+            "tl_tornado" => "Wind River Tornado IDE",
+            "tl_java_sdk" => "Sun Java SDK",
+            "tl_structured_text" => "Structured Text / LASAL",
+            "tl_node_js" => "Node.js",
             _ => "",
         }
     }
@@ -180,6 +208,8 @@ impl UiI18n for HungarianUi {
             "manual_testing" => "Funkcionális és regressziós tesztelés",
             "erp" => "Vállalatirányítási rendszerek",
             "administration" => "Rendszer- és hálózat-adminisztráció",
+            "leading" => "Vilati — szoftverfejlesztő részleg vezetése",
+            "auto_test_dev" => "Bosch — automatizált teszteszközök fejlesztése",
             "hungary" => "Vilati, Mediso, MOL, Bäko-Hungaria, Bitnök, Telekom",
             "germany" => "Teamcom, Bosch",
             "austria" => "Porsche Informatik, Sigmatek",
@@ -273,6 +303,32 @@ impl UiI18n for HungarianUi {
             // Main Characteristics hints
             "mc_strengths" => "Szakértelem, vezetés és problémamegoldás",
             "mc_achievements" => "Test.NET, SK24 szinkronizáció, Vortexledger",
+            "mc_countries" => "Magyarország, Németország, Ausztria",
+            "mc_languages" => "Magyar, német, angol",
+            "mc_certificates" => "Diploma, PM, SQL, JavaScript, AI, vezetéstechnika",
+            // Tool hints
+            "tl_visual_studio" => "Bosch, Vilati, Teamcom, Mediso",
+            "tl_ms_office" => "Bosch — dokumentáció, tervezés",
+            "tl_clearcase" => "Bosch — verziókezelés",
+            "tl_clearquest" => "Bosch — hibakövetés",
+            "tl_doors" => "Bosch — követelménymenedzsment",
+            "tl_isystem" => "Bosch — mikrokontroller debuggolás",
+            "tl_dspace" => "Bosch — HiL tesztelés",
+            "tl_ni_teststand" => "Bosch — automatizált tesztelés",
+            "tl_ni_cvi" => "Bosch — félautomatikus tesztelés",
+            "tl_agilent" => "Bosch — mérőműszerek ablakemelő teszthez",
+            "tl_opentest" => "Bosch — automatizált teszteszköz (most Vector)",
+            "tl_authors_dream" => "Teamcom — multimédia szerkesztő",
+            "tl_authorware" => "Teamcom — Citibank multimédia",
+            "tl_python" => "Bosch — TestDesigner szkriptek",
+            "tl_snow" => "Telekom — ITSM jegykezelés",
+            "tl_keil" => "Vilati — C167 mikrokontroller fordító",
+            "tl_cosmic" => "Bosch — autóipari mikrokontroller fordító",
+            "tl_gnu_cc" => "Vilati — OCIT firmware Linux alatt",
+            "tl_tornado" => "Vilati — VxWorks valós idejű fejlesztés",
+            "tl_java_sdk" => "Vilati — Java Native Interface",
+            "tl_structured_text" => "Sigmatek — ipari vezérlőprogramozás",
+            "tl_node_js" => "Bitnök — open ledger eszközök",
             _ => "",
         }
     }

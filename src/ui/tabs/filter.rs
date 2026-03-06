@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 use crate::ui::state::{
-    AppState, SKILL_KEYS, COUNTRY_KEYS, LANGUAGE_KEYS, COMPANY_KEYS, CERTIFICATE_KEYS,
-    WORKPLACE_KEYS, JOB_ROLE_KEYS, PROJECT_KEYS, EXPERTISE_KEYS, MAIN_CHARS_KEYS,
+    AppState, SKILL_KEYS, COMPANY_KEYS,
+    JOB_ROLE_KEYS, PROJECT_KEYS, MAIN_CHARS_KEYS, TOOL_KEYS,
 };
 use crate::ui::i18n::UiI18n;
 
@@ -10,47 +10,39 @@ pub fn render_filter_tab(s: AppState, i18n: &dyn UiI18n) -> Element {
         // "Főbb jellemzőim" (My Main Characteristics) group
         {render_section(s, i18n, i18n.section_main_chars(), MAIN_CHARS_KEYS, SectionKind::MainChars)}
 
+        // Companies (moved to where Workplaces was)
+        {render_section(s, i18n, i18n.section_companies(), COMPANY_KEYS, SectionKind::Companies)}
+
         // Sankey-based groups
-        {render_section(s, i18n, i18n.section_workplaces(), WORKPLACE_KEYS, SectionKind::Workplaces)}
         {render_section(s, i18n, i18n.section_job_roles(), JOB_ROLE_KEYS, SectionKind::JobRoles)}
         {render_section(s, i18n, i18n.section_projects(), PROJECT_KEYS, SectionKind::Projects)}
-        {render_section(s, i18n, i18n.section_expertise(), EXPERTISE_KEYS, SectionKind::Expertise)}
 
-        // Original groups
+        // Technical Skills (merged with Professional Skills)
         {render_section(s, i18n, i18n.section_skills(), SKILL_KEYS, SectionKind::Skills)}
-        {render_section(s, i18n, i18n.section_countries(), COUNTRY_KEYS, SectionKind::Countries)}
-        {render_section(s, i18n, i18n.section_languages(), LANGUAGE_KEYS, SectionKind::Languages)}
-        {render_section(s, i18n, i18n.section_companies(), COMPANY_KEYS, SectionKind::Companies)}
-        {render_section(s, i18n, i18n.section_certificates(), CERTIFICATE_KEYS, SectionKind::Certificates)}
+
+        // Tools (IDEs, testing tools, compilers, etc.)
+        {render_section(s, i18n, i18n.section_tools(), TOOL_KEYS, SectionKind::Tools)}
     }
 }
 
 #[derive(Clone, Copy)]
 enum SectionKind {
     Skills,
-    Countries,
-    Languages,
     Companies,
-    Certificates,
-    Workplaces,
     JobRoles,
     Projects,
-    Expertise,
     MainChars,
+    Tools,
 }
 
 fn get_signal(s: AppState, kind: SectionKind) -> Signal<Vec<&'static str>> {
     match kind {
         SectionKind::Skills => s.selected_skills,
-        SectionKind::Countries => s.selected_countries,
-        SectionKind::Languages => s.selected_languages,
         SectionKind::Companies => s.selected_companies,
-        SectionKind::Certificates => s.selected_certificates,
-        SectionKind::Workplaces => s.selected_workplaces,
         SectionKind::JobRoles => s.selected_job_roles,
         SectionKind::Projects => s.selected_projects,
-        SectionKind::Expertise => s.selected_expertise,
         SectionKind::MainChars => s.selected_main_chars,
+        SectionKind::Tools => s.selected_tools,
     }
 }
 
