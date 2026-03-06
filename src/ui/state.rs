@@ -87,6 +87,12 @@ pub const EXPERTISE_KEYS: &[&str] = &[
     "ex_auto_testing", "ex_auto_test_dev", "ex_test_mgmt",
 ];
 
+// ── "Főbb jellemzőim" (My Main Characteristics) group ──
+
+pub const MAIN_CHARS_KEYS: &[&str] = &[
+    "mc_strengths", "mc_achievements",
+];
+
 const STORAGE_KEY: &str = "profil_app_state";
 
 /// Serializable snapshot of the entire app state for localStorage.
@@ -109,6 +115,8 @@ struct PersistedState {
     selected_projects: Vec<String>,
     #[serde(default)]
     selected_expertise: Vec<String>,
+    #[serde(default)]
+    selected_main_chars: Vec<String>,
 }
 
 /// Convert a `Vec<String>` back to `Vec<&'static str>` by matching against
@@ -152,6 +160,7 @@ pub struct AppState {
     pub selected_job_roles: Signal<Vec<&'static str>>,
     pub selected_projects: Signal<Vec<&'static str>>,
     pub selected_expertise: Signal<Vec<&'static str>>,
+    pub selected_main_chars: Signal<Vec<&'static str>>,
 }
 
 pub fn use_app_state() -> AppState {
@@ -211,6 +220,11 @@ pub fn use_app_state() -> AppState {
                 .map(|p| resolve_keys(&p.selected_expertise, EXPERTISE_KEYS))
                 .unwrap_or_default()
         }),
+        selected_main_chars: use_signal(|| {
+            load_persisted()
+                .map(|p| resolve_keys(&p.selected_main_chars, MAIN_CHARS_KEYS))
+                .unwrap_or_default()
+        }),
     };
 
     state
@@ -231,6 +245,7 @@ pub fn persist(s: &AppState) {
         selected_job_roles: s.selected_job_roles.read().iter().map(|s| s.to_string()).collect(),
         selected_projects: s.selected_projects.read().iter().map(|s| s.to_string()).collect(),
         selected_expertise: s.selected_expertise.read().iter().map(|s| s.to_string()).collect(),
+        selected_main_chars: s.selected_main_chars.read().iter().map(|s| s.to_string()).collect(),
     };
     save_persisted(&snapshot);
 }

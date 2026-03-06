@@ -38,6 +38,11 @@ pub trait UiI18n {
     fn section_projects(&self) -> &'static str;
     fn section_expertise(&self) -> &'static str;
 
+    // "Főbb jellemzőim" (My Main Characteristics) group
+    fn section_main_chars(&self) -> &'static str;
+    fn role_achievements_title(&self) -> &'static str;
+    fn role_achievements(&self) -> &'static [(&'static str, &'static str)];
+
     // Display tab
     fn display_nothing_selected(&self) -> &'static str;
 

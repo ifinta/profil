@@ -34,6 +34,19 @@ impl UiI18n for HungarianUi {
     fn section_projects(&self) -> &'static str { "Projektek" }
     fn section_expertise(&self) -> &'static str { "Szakmai ismeretek" }
 
+    fn section_main_chars(&self) -> &'static str { "Főbb jellemzőim" }
+    fn role_achievements_title(&self) -> &'static str { "Főbb eredmények" }
+    fn role_achievements(&self) -> &'static [(&'static str, &'static str)] {
+        &[
+            ("Test.NET tesztfejlesztő-framework",
+             "Azóta a Bosch értékesítette a Vector-nak."),
+            ("SK24 lámpakapcsolókártya szinkronizációja",
+             "A közlekedésirányítási lámpakapcsolókártya belső folyamatainak real time szinkronizációja az elektromos hálózat szinusz-hullámaihoz."),
+            ("Vortexledger koncepció",
+             "Cserekereskedelemre alapuló open ledger és gazdaság koncepciója."),
+        ]
+    }
+
     fn display_nothing_selected(&self) -> &'static str { "Válassz elemeket a Szűrő fülön a részletek megtekintéséhez." }
 
     fn item_label(&self, key: &str) -> &'static str {
@@ -143,6 +156,9 @@ impl UiI18n for HungarianUi {
             "ex_auto_testing" => "Automatizált tesztelés",
             "ex_auto_test_dev" => "Automatizált-teszt fejlesztés",
             "ex_test_mgmt" => "Tesztmenedzsment",
+            // Main Characteristics
+            "mc_strengths" => "Erősségek",
+            "mc_achievements" => "Főbb eredmények",
             _ => "",
         }
     }
@@ -254,6 +270,9 @@ impl UiI18n for HungarianUi {
             "ex_auto_testing" => "Bosch — automatizált HW/SW tesztelés",
             "ex_auto_test_dev" => "Bosch — automatizált teszteszközök fejlesztése",
             "ex_test_mgmt" => "Bosch — tesztstratégia, tervezés, jelentéskészítés",
+            // Main Characteristics hints
+            "mc_strengths" => "Szakértelem, vezetés és problémamegoldás",
+            "mc_achievements" => "Test.NET, SK24 szinkronizáció, Vortexledger",
             _ => "",
         }
     }

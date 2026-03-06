@@ -9,12 +9,14 @@ pub fn render_display_tab(s: AppState, i18n: &dyn UiI18n) -> Element {
     let languages = s.selected_languages.read().clone();
     let companies = s.selected_companies.read().clone();
     let certificates = s.selected_certificates.read().clone();
+    let main_chars = s.selected_main_chars.read().clone();
 
     let has_anything = !skills.is_empty()
         || !countries.is_empty()
         || !languages.is_empty()
         || !companies.is_empty()
-        || !certificates.is_empty();
+        || !certificates.is_empty()
+        || !main_chars.is_empty();
 
     if !has_anything {
         return rsx! {
@@ -26,6 +28,9 @@ pub fn render_display_tab(s: AppState, i18n: &dyn UiI18n) -> Element {
     }
 
     let pdf_label = i18n.btn_generate_pdf().to_string();
+    let role_key = s.selected_role.read().key();
+    let show_strengths = main_chars.contains(&"mc_strengths");
+    let show_achievements = main_chars.contains(&"mc_achievements");
 
     rsx! {
         // Generate PDF button
@@ -37,6 +42,14 @@ pub fn render_display_tab(s: AppState, i18n: &dyn UiI18n) -> Element {
                 },
                 "\u{1F4C4} {pdf_label}"
             }
+        }
+
+        // ── "Főbb jellemzőim" items ──
+        if show_strengths {
+            {render_strengths_section(i18n, role_key)}
+        }
+        if show_achievements {
+            {render_achievements_section(i18n)}
         }
 
         if !skills.is_empty() {
@@ -53,6 +66,48 @@ pub fn render_display_tab(s: AppState, i18n: &dyn UiI18n) -> Element {
         }
         if !certificates.is_empty() {
             {render_display_section(i18n, i18n.section_certificates(), &certificates, "#6f42c1")}
+        }
+    }
+}
+
+fn render_strengths_section(i18n: &dyn UiI18n, role_key: &str) -> Element {
+    let title = i18n.role_strengths_title().to_string();
+    let items: Vec<(String, String)> = i18n
+        .role_strengths(role_key)
+        .iter()
+        .map(|(t, d)| (t.to_string(), d.to_string()))
+        .collect();
+
+    rsx! {
+        div { style: "margin-bottom: 18px; border-left: 4px solid #764ba2; padding: 12px 16px; background: #fafbfc; border-radius: 0 8px 8px 0;",
+            h4 { style: "margin: 0 0 8px; color: #764ba2; font-size: 1em;", "{title}" }
+            for (t, d) in items.iter() {
+                div { style: "margin-bottom: 10px; padding-left: 10px; border-left: 2px solid #e9ecef;",
+                    p { style: "margin: 0 0 2px; color: #333; font-weight: 600; font-size: 0.92em;", "{t}" }
+                    p { style: "margin: 0; color: #666; font-size: 0.85em; line-height: 1.5;", "{d}" }
+                }
+            }
+        }
+    }
+}
+
+fn render_achievements_section(i18n: &dyn UiI18n) -> Element {
+    let title = i18n.role_achievements_title().to_string();
+    let items: Vec<(String, String)> = i18n
+        .role_achievements()
+        .iter()
+        .map(|(t, d)| (t.to_string(), d.to_string()))
+        .collect();
+
+    rsx! {
+        div { style: "margin-bottom: 18px; border-left: 4px solid #e83e8c; padding: 12px 16px; background: #fafbfc; border-radius: 0 8px 8px 0;",
+            h4 { style: "margin: 0 0 8px; color: #e83e8c; font-size: 1em;", "{title}" }
+            for (t, d) in items.iter() {
+                div { style: "margin-bottom: 10px; padding-left: 10px; border-left: 2px solid #e9ecef;",
+                    p { style: "margin: 0 0 2px; color: #333; font-weight: 600; font-size: 0.92em;", "{t}" }
+                    p { style: "margin: 0; color: #666; font-size: 0.85em; line-height: 1.5;", "{d}" }
+                }
+            }
         }
     }
 }

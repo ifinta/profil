@@ -34,6 +34,19 @@ impl UiI18n for GermanUi {
     fn section_projects(&self) -> &'static str { "Projekte" }
     fn section_expertise(&self) -> &'static str { "Fachkenntnisse" }
 
+    fn section_main_chars(&self) -> &'static str { "Meine Hauptmerkmale" }
+    fn role_achievements_title(&self) -> &'static str { "Wichtigste Erfolge" }
+    fn role_achievements(&self) -> &'static [(&'static str, &'static str)] {
+        &[
+            ("Test.NET Testentwicklungs-Framework",
+             "Später von Bosch an Vector verkauft."),
+            ("SK24 Lampenschaltkarte Synchronisation",
+             "Echtzeit-Synchronisation der internen Prozesse der Verkehrssteuerungs-Lampenschaltkarte mit den Sinuswellen des Stromnetzes."),
+            ("Vortexledger-Konzept",
+             "Ein auf Tauschhandel basierendes Open-Ledger- und Wirtschaftskonzept."),
+        ]
+    }
+
     fn display_nothing_selected(&self) -> &'static str { "Wählen Sie Elemente im Filter-Tab aus, um Details hier zu sehen." }
 
     fn item_label(&self, key: &str) -> &'static str {
@@ -143,6 +156,9 @@ impl UiI18n for GermanUi {
             "ex_auto_testing" => "Automatisiertes Testen",
             "ex_auto_test_dev" => "Automatisierte-Test Entwicklung",
             "ex_test_mgmt" => "Test Management",
+            // Main Characteristics
+            "mc_strengths" => "Stärken",
+            "mc_achievements" => "Wichtigste Erfolge",
             _ => "",
         }
     }
@@ -254,6 +270,9 @@ impl UiI18n for GermanUi {
             "ex_auto_testing" => "Bosch — automatisiertes HW/SW-Testen",
             "ex_auto_test_dev" => "Bosch — automatisierte Testtool-Entwicklung",
             "ex_test_mgmt" => "Bosch — Teststrategie, Planung, Berichterstattung",
+            // Main Characteristics hints
+            "mc_strengths" => "Fachkompetenz, Führung und Problemlösung",
+            "mc_achievements" => "Test.NET, SK24 Synchronisation, Vortexledger",
             _ => "",
         }
     }

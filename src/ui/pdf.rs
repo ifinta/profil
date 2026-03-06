@@ -106,6 +106,40 @@ fn build_pdf_html(s: &AppState, i18n: &dyn UiI18n) -> String {
     // ── Display content (detailed sections) ──
     html.push_str("<hr style=\"border: none; border-top: 1px solid #ddd; margin: 10px 0;\">");
 
+    // ── "Főbb jellemzőim" items ──
+    let mc = s.selected_main_chars.read();
+    let role_key = s.selected_role.read().key();
+
+    if mc.contains(&"mc_strengths") {
+        html.push_str("<div style=\"margin-bottom: 12px; border-left: 3px solid #764ba2; padding: 8px 12px; background: #fafbfc; border-radius: 0 6px 6px 0;\">");
+        html.push_str(&format!(
+            "<h4 style=\"margin: 0 0 6px; color: #764ba2; font-size: 13px;\">{}</h4>",
+            esc(i18n.role_strengths_title())
+        ));
+        for (title, desc) in i18n.role_strengths(role_key) {
+            html.push_str(&format!(
+                "<div style=\"padding: 3px 0; border-bottom: 1px solid #eee;\"><span style=\"font-size: 11px; color: #333; font-weight: 600;\">{}</span> <span style=\"font-size: 9px; color: #888;\">— {}</span></div>",
+                esc(title), esc(desc)
+            ));
+        }
+        html.push_str("</div>");
+    }
+
+    if mc.contains(&"mc_achievements") {
+        html.push_str("<div style=\"margin-bottom: 12px; border-left: 3px solid #e83e8c; padding: 8px 12px; background: #fafbfc; border-radius: 0 6px 6px 0;\">");
+        html.push_str(&format!(
+            "<h4 style=\"margin: 0 0 6px; color: #e83e8c; font-size: 13px;\">{}</h4>",
+            esc(i18n.role_achievements_title())
+        ));
+        for (title, desc) in i18n.role_achievements() {
+            html.push_str(&format!(
+                "<div style=\"padding: 3px 0; border-bottom: 1px solid #eee;\"><span style=\"font-size: 11px; color: #333; font-weight: 600;\">{}</span> <span style=\"font-size: 9px; color: #888;\">— {}</span></div>",
+                esc(title), esc(desc)
+            ));
+        }
+        html.push_str("</div>");
+    }
+
     let sk = s.selected_skills.read();
     let co = s.selected_countries.read();
     let la = s.selected_languages.read();

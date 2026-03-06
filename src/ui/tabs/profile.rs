@@ -100,21 +100,5 @@ pub fn render_profile_tab(s: AppState, i18n: &dyn UiI18n) -> Element {
             }
         }
 
-        // Strengths section
-        div { style: "text-align: left; padding: 16px; background: white; border-radius: 10px; border: 1px solid #e9ecef; margin-bottom: 16px;",
-            h3 { style: "margin: 0 0 12px; color: #333; font-size: 1.1em;",
-                "{i18n.role_strengths_title()}"
-            }
-            for (title, desc) in i18n.role_strengths(role_key).iter() {
-                div { style: "margin-bottom: 12px; padding-left: 12px; border-left: 3px solid #764ba2;",
-                    p { style: "margin: 0 0 2px; color: #333; font-weight: 600; font-size: 0.92em;",
-                        "{title}"
-                    }
-                    p { style: "margin: 0; color: #666; font-size: 0.85em; line-height: 1.5;",
-                        "{desc}"
-                    }
-                }
-            }
-        }
     }
 }

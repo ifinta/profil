@@ -34,6 +34,19 @@ impl UiI18n for EnglishUi {
     fn section_projects(&self) -> &'static str { "Projects" }
     fn section_expertise(&self) -> &'static str { "Professional Skills" }
 
+    fn section_main_chars(&self) -> &'static str { "My Main Characteristics" }
+    fn role_achievements_title(&self) -> &'static str { "Key Achievements" }
+    fn role_achievements(&self) -> &'static [(&'static str, &'static str)] {
+        &[
+            ("Test.NET test development framework",
+             "Later sold by Bosch to Vector."),
+            ("SK24 lamp switch card synchronization",
+             "Real-time synchronization of the traffic control lamp switch card's internal processes to the electrical grid's sine waves."),
+            ("Vortexledger concept",
+             "An open ledger and economy concept based on barter trade."),
+        ]
+    }
+
     fn display_nothing_selected(&self) -> &'static str { "Select items on the Filter tab to see details here." }
 
     fn item_label(&self, key: &str) -> &'static str {
@@ -148,6 +161,9 @@ impl UiI18n for EnglishUi {
             "ex_auto_testing" => "Automated Testing",
             "ex_auto_test_dev" => "Automated Test Development",
             "ex_test_mgmt" => "Test Management",
+            // Main Characteristics
+            "mc_strengths" => "Strengths",
+            "mc_achievements" => "Key Achievements",
             _ => "",
         }
     }
@@ -259,6 +275,9 @@ impl UiI18n for EnglishUi {
             "ex_auto_testing" => "Bosch — automated HW/SW testing",
             "ex_auto_test_dev" => "Bosch — automated test tool development",
             "ex_test_mgmt" => "Bosch — test strategy, planning and reporting",
+            // Main Characteristics hints
+            "mc_strengths" => "Expertise, leadership and problem solving",
+            "mc_achievements" => "Test.NET, SK24 synchronization, Vortexledger",
             _ => "",
         }
     }

@@ -1,12 +1,15 @@
 use dioxus::prelude::*;
 use crate::ui::state::{
     AppState, SKILL_KEYS, COUNTRY_KEYS, LANGUAGE_KEYS, COMPANY_KEYS, CERTIFICATE_KEYS,
-    WORKPLACE_KEYS, JOB_ROLE_KEYS, PROJECT_KEYS, EXPERTISE_KEYS,
+    WORKPLACE_KEYS, JOB_ROLE_KEYS, PROJECT_KEYS, EXPERTISE_KEYS, MAIN_CHARS_KEYS,
 };
 use crate::ui::i18n::UiI18n;
 
 pub fn render_filter_tab(s: AppState, i18n: &dyn UiI18n) -> Element {
     rsx! {
+        // "Főbb jellemzőim" (My Main Characteristics) group
+        {render_section(s, i18n, i18n.section_main_chars(), MAIN_CHARS_KEYS, SectionKind::MainChars)}
+
         // Sankey-based groups
         {render_section(s, i18n, i18n.section_workplaces(), WORKPLACE_KEYS, SectionKind::Workplaces)}
         {render_section(s, i18n, i18n.section_job_roles(), JOB_ROLE_KEYS, SectionKind::JobRoles)}
@@ -33,6 +36,7 @@ enum SectionKind {
     JobRoles,
     Projects,
     Expertise,
+    MainChars,
 }
 
 fn get_signal(s: AppState, kind: SectionKind) -> Signal<Vec<&'static str>> {
@@ -46,6 +50,7 @@ fn get_signal(s: AppState, kind: SectionKind) -> Signal<Vec<&'static str>> {
         SectionKind::JobRoles => s.selected_job_roles,
         SectionKind::Projects => s.selected_projects,
         SectionKind::Expertise => s.selected_expertise,
+        SectionKind::MainChars => s.selected_main_chars,
     }
 }
 
