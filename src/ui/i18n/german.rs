@@ -8,6 +8,7 @@ impl UiI18n for GermanUi {
     fn tab_display(&self) -> &'static str { "Anzeige" }
 
     fn profile_name(&self) -> &'static str { "István Finta" }
+    fn profile_subtitle(&self) -> &'static str { "Dipl.-Ing. Maschinenbau, Robotik-Informatik" }
     fn profile_title(&self) -> &'static str { "Software-Entwickler" }
     fn profile_location(&self) -> &'static str { "Ungarn" }
     fn profile_email(&self) -> &'static str { "istvan_finta@yahoo.com" }
@@ -36,6 +37,21 @@ impl UiI18n for GermanUi {
 
     fn section_main_chars(&self) -> &'static str { "Meine Hauptmerkmale" }
     fn role_achievements_title(&self) -> &'static str { "Wichtigste Erfolge" }
+    fn digital_skills_title(&self) -> &'static str { "Digitale Kompetenzen" }
+    fn digital_skills_text(&self) -> &'static str {
+        "Umfassend.\n\n\
+         OS: Windows, Debian Linux, iOS, Android, OSX, VxWorks, ...\n\
+         Developer tools, Makefiles, Compiler (C, C#, C++, etwas Rust, ...), Interpreter \
+         (Python, ...), Texteditoren (nano, kate, MS Code, ...)\n\
+         MS Office, Word, Excel, ... (Libre Office und ähnliche ebenfalls), Browser, Web-\
+         Anwendungen, Cloud-Provider (Vultr, Oracle, ...)\n\
+         Grafikanwendungen, OpenSCAD (3D-Designer), Eagle (Schaltungsdesigner), Gimp, \
+         Screenshot-Tools, Fotobearbeitungsprogramme, ...\n\
+         Grundlegende KI-Kenntnisse, Fortgeschrittene DLT (Distributed Ledger Technology)--\
+         Kenntnisse, Stellar Network, Smart Contracts, ... Grundlegende Webentwicklung, HTML5, \
+         CSS, JavaScript, etwas React, etwas NodeJS, ...\n\n\
+         Ich eigne mir schnell Anwendungen, Programmiersprachen und Betriebssysteme an."
+    }
     fn role_achievements(&self) -> &'static [(&'static str, &'static str)] {
         &[
             ("Test.NET Testentwicklungs-Framework",
@@ -71,9 +87,9 @@ impl UiI18n for GermanUi {
             "hungary" => "Ungarn",
             "germany" => "Deutschland",
             "austria" => "Österreich",
-            "lang_hungarian" => "Ungarisch (Muttersprache)",
-            "lang_german" => "Deutsch (fließend)",
-            "lang_english" => "Englisch (fließend)",
+            "lang_hungarian" => "Ungarisch",
+            "lang_german" => "Deutsch",
+            "lang_english" => "Englisch",
             "mol" => "MOL AG (1993)",
             "bako" => "Bäko-Hungaria (1993)",
             "teamcom" => "Teamcom (1995–2001)",
@@ -173,6 +189,7 @@ impl UiI18n for GermanUi {
             "mc_countries" => "Länder",
             "mc_languages" => "Sprachkenntnisse",
             "mc_certificates" => "Zertifikate",
+            "mc_digital_skills" => "Digitale Kompetenzen",
             // Tools
             "tl_visual_studio" => "Visual Studio",
             "tl_ms_office" => "MS Office (Excel, Word, Access)",
@@ -223,8 +240,8 @@ impl UiI18n for GermanUi {
             "germany" => "Teamcom, Bosch",
             "austria" => "Porsche Informatik, Sigmatek",
             "lang_hungarian" => "Muttersprache",
-            "lang_german" => "Arbeitssprache seit 1995",
-            "lang_english" => "Berufliche Kompetenz",
+            "lang_german" => "Verhandlungssicher gewesen, lange nicht benutzt",
+            "lang_english" => "Grundkonversation, Fachliteratur, E-Mail, Chat",
             "mol" => "Administration des Laborsystems",
             "bako" => "ERP-Systemadministration",
             "teamcom" => "Finanzmultimedia-Software — Deutsche Bank, Citibank, C&L",
@@ -324,6 +341,7 @@ impl UiI18n for GermanUi {
             "mc_countries" => "Ungarn, Deutschland, Österreich",
             "mc_languages" => "Ungarisch, Deutsch, Englisch",
             "mc_certificates" => "Diplom, PM, SQL, JavaScript, KI, Fahrtechnik",
+            "mc_digital_skills" => "Umfassende digitale Kompetenzen",
             // Tool hints
             "tl_visual_studio" => "Bosch, Vilati, Teamcom, Mediso",
             "tl_ms_office" => "Bosch — Dokumentation, Planung",

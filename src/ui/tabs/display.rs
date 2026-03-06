@@ -34,6 +34,7 @@ pub fn render_display_tab(s: AppState, i18n: &dyn UiI18n) -> Element {
     let show_countries = main_chars.contains(&"mc_countries");
     let show_languages = main_chars.contains(&"mc_languages");
     let show_certificates = main_chars.contains(&"mc_certificates");
+    let show_digital_skills = main_chars.contains(&"mc_digital_skills");
 
     // Show project experience if any content filter or company is selected
     let has_content_filter = !job_roles.is_empty() || !projects.is_empty() || !skills.is_empty() || !tools.is_empty();
@@ -70,6 +71,9 @@ pub fn render_display_tab(s: AppState, i18n: &dyn UiI18n) -> Element {
                 sorted_certs.sort_by_key(|k| i18n.item_label(k));
                 render_display_section(i18n, i18n.section_certificates(), &sorted_certs, "#6f42c1")
             }
+        }
+        if show_digital_skills {
+            {render_digital_skills_section(i18n)}
         }
 
         // ── Project Experience ──
@@ -115,6 +119,27 @@ fn render_achievements_section(i18n: &dyn UiI18n) -> Element {
                 div { style: "margin-bottom: 10px; padding-left: 10px; border-left: 2px solid #e9ecef;",
                     p { style: "margin: 0 0 2px; color: #333; font-weight: 600; font-size: 0.92em;", "{t}" }
                     p { style: "margin: 0; color: #666; font-size: 0.85em; line-height: 1.5;", "{d}" }
+                }
+            }
+        }
+    }
+}
+
+fn render_digital_skills_section(i18n: &dyn UiI18n) -> Element {
+    let title = i18n.digital_skills_title().to_string();
+    let text = i18n.digital_skills_text().to_string();
+    let lines: Vec<String> = text.split('\n').map(|s| s.to_string()).collect();
+
+    rsx! {
+        div { style: "margin-bottom: 18px; border-left: 4px solid #17a2b8; padding: 12px 16px; background: #fafbfc; border-radius: 0 8px 8px 0;",
+            h4 { style: "margin: 0 0 8px; color: #17a2b8; font-size: 1em;", "{title}" }
+            for line in lines.iter() {
+                if line.is_empty() {
+                    br {}
+                } else {
+                    p { style: "margin: 0 0 4px; color: #555; font-size: 0.88em; line-height: 1.5;",
+                        "{line}"
+                    }
                 }
             }
         }

@@ -46,10 +46,14 @@ fn build_pdf_html(s: &AppState, i18n: &dyn UiI18n) -> String {
     // ── Profile section ──
     html.push_str("<div style=\"padding: 10px 20px;\">");
 
-    // Name + title header
+    // Name + subtitle + title header
     html.push_str(&format!(
         "<h1 style=\"margin: 0 0 2px; color: #333; font-size: 22px;\">{}</h1>",
         esc(i18n.profile_name())
+    ));
+    html.push_str(&format!(
+        "<p style=\"margin: 0 0 2px; color: #555; font-size: 12px; font-style: italic;\">{}</p>",
+        esc(i18n.profile_subtitle())
     ));
     html.push_str(&format!(
         "<p style=\"margin: 0 0 2px; color: #667eea; font-size: 14px; font-weight: 600;\">{}</p>",
@@ -67,15 +71,21 @@ fn build_pdf_html(s: &AppState, i18n: &dyn UiI18n) -> String {
         esc(i18n.profile_phone())
     ));
 
-    // About
-    html.push_str(&format!(
-        "<h3 style=\"margin: 14px 0 4px; color: #333; font-size: 14px;\">{}</h3>",
-        esc(i18n.profile_about())
-    ));
-    html.push_str(&format!(
-        "<p style=\"margin: 0 0 14px; color: #555; font-size: 11px; line-height: 1.5;\">{}</p>",
-        esc(i18n.profile_about_text())
-    ));
+    // Target
+    {
+        let role_key = s.selected_role.read().key();
+        let target_text = i18n.role_target_text(role_key);
+        if !target_text.is_empty() {
+            html.push_str(&format!(
+                "<h3 style=\"margin: 14px 0 4px; color: #333; font-size: 14px;\">{}</h3>",
+                esc(i18n.role_target_title())
+            ));
+            html.push_str(&format!(
+                "<p style=\"margin: 0 0 14px; color: #555; font-size: 11px; line-height: 1.5;\">{}</p>",
+                esc(target_text)
+            ));
+        }
+    }
 
     // ── Filter choices (small text) ──
     html.push_str("<hr style=\"border: none; border-top: 1px solid #ddd; margin: 10px 0;\">");
@@ -128,6 +138,24 @@ fn build_pdf_html(s: &AppState, i18n: &dyn UiI18n) -> String {
         let mut sorted_certs = CERTIFICATE_KEYS.to_vec();
         sorted_certs.sort_by_key(|k| i18n.item_label(k));
         build_keyed_section(&mut html, i18n, i18n.section_certificates(), &sorted_certs, "#6f42c1");
+    }
+    if mc.contains(&"mc_digital_skills") {
+        html.push_str("<div style=\"margin-bottom: 12px; border-left: 3px solid #17a2b8; padding: 8px 12px; background: #fafbfc; border-radius: 0 6px 6px 0;\">");
+        html.push_str(&format!(
+            "<h4 style=\"margin: 0 0 6px; color: #17a2b8; font-size: 13px;\">{}</h4>",
+            esc(i18n.digital_skills_title())
+        ));
+        for line in i18n.digital_skills_text().split('\n') {
+            if line.is_empty() {
+                html.push_str("<br>");
+            } else {
+                html.push_str(&format!(
+                    "<p style=\"margin: 0 0 3px; font-size: 10px; color: #555; line-height: 1.4;\">{}</p>",
+                    esc(line)
+                ));
+            }
+        }
+        html.push_str("</div>");
     }
 
     // ── Project Experience ──

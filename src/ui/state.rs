@@ -95,6 +95,7 @@ pub const TOOL_KEYS: &[&str] = &[
 pub const MAIN_CHARS_KEYS: &[&str] = &[
     "mc_strengths", "mc_achievements",
     "mc_countries", "mc_languages", "mc_certificates",
+    "mc_digital_skills",
 ];
 
 // ── Project experience (extracted from CV pages 4+) ──

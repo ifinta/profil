@@ -16,6 +16,7 @@ pub trait UiI18n {
 
     // Profile tab
     fn profile_name(&self) -> &'static str;
+    fn profile_subtitle(&self) -> &'static str;
     fn profile_title(&self) -> &'static str;
     fn profile_location(&self) -> &'static str;
     fn profile_email(&self) -> &'static str;
@@ -46,6 +47,8 @@ pub trait UiI18n {
     fn section_main_chars(&self) -> &'static str;
     fn role_achievements_title(&self) -> &'static str;
     fn role_achievements(&self) -> &'static [(&'static str, &'static str)];
+    fn digital_skills_title(&self) -> &'static str;
+    fn digital_skills_text(&self) -> &'static str;
 
     // Display tab
     fn display_nothing_selected(&self) -> &'static str;

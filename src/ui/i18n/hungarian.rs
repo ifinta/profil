@@ -8,6 +8,7 @@ impl UiI18n for HungarianUi {
     fn tab_display(&self) -> &'static str { "Megjelenítés" }
 
     fn profile_name(&self) -> &'static str { "Finta István" }
+    fn profile_subtitle(&self) -> &'static str { "okl. gépészmérnök, robotinformatikus" }
     fn profile_title(&self) -> &'static str { "Szoftvermérnök" }
     fn profile_location(&self) -> &'static str { "Magyarország" }
     fn profile_email(&self) -> &'static str { "istvan_finta@yahoo.com" }
@@ -36,6 +37,21 @@ impl UiI18n for HungarianUi {
 
     fn section_main_chars(&self) -> &'static str { "Főbb jellemzőim" }
     fn role_achievements_title(&self) -> &'static str { "Főbb eredmények" }
+    fn digital_skills_title(&self) -> &'static str { "Digitális ismeretek" }
+    fn digital_skills_text(&self) -> &'static str {
+        "Széleskörű.\n\n\
+         OS: Windows, Debian Linux, iOS, Android, OSX, VxWorks, ...\n\
+         Developer tools, makefiles, compilers (C, C#, C++, kis Rust, ...), interpreters \
+         (Python, ...), text editors (nano, kate, MS Code, ...)\n\
+         MS Office, Word, Excel, ... (Libre Office és hasonlóak szintén), Böngészők, Web \
+         alkalmazások, Cloud providerek (Vultr, Oracle, ...)\n\
+         Grafikus alkalmazások, OpenSCAD (3D tervező), Eagle (áramkör tervező), Gimp, \
+         Screenshot készítő programok, fotómanipuláló programok, ...\n\
+         Alap AI ismeretek, Magasszintű DLT (Distributed Ledger Technologie) ismeretek, \
+         Stellar Network, smart contracts, ... Alap webfejlesztő ismeretek, HTML5, CSS, \
+         JavaScript, kis React, kis NodeJS, ...\n\n\
+         Gyorsan elsajátítok alkalmazásokat, programnyelveket, operációs rendszereket."
+    }
     fn role_achievements(&self) -> &'static [(&'static str, &'static str)] {
         &[
             ("Test.NET tesztfejlesztő-framework",
@@ -71,9 +87,9 @@ impl UiI18n for HungarianUi {
             "hungary" => "Magyarország",
             "germany" => "Németország",
             "austria" => "Ausztria",
-            "lang_hungarian" => "Magyar (anyanyelv)",
-            "lang_german" => "Német (folyékony)",
-            "lang_english" => "Angol (folyékony)",
+            "lang_hungarian" => "Magyar",
+            "lang_german" => "Német",
+            "lang_english" => "Angol",
             "mol" => "MOL AG (1993)",
             "bako" => "Bäko-Hungaria (1993)",
             "teamcom" => "Teamcom (1995–2001)",
@@ -173,6 +189,7 @@ impl UiI18n for HungarianUi {
             "mc_countries" => "Országok",
             "mc_languages" => "Nyelvtudás",
             "mc_certificates" => "Bizonyítványok",
+            "mc_digital_skills" => "Digitális ismeretek",
             // Tools
             "tl_visual_studio" => "Visual Studio",
             "tl_ms_office" => "MS Office (Excel, Word, Access)",
@@ -223,8 +240,8 @@ impl UiI18n for HungarianUi {
             "germany" => "Teamcom, Bosch",
             "austria" => "Porsche Informatik, Sigmatek",
             "lang_hungarian" => "Anyanyelv",
-            "lang_german" => "Munkanyelv 1995 óta",
-            "lang_english" => "Szakmai szintű tudás",
+            "lang_german" => "Tárgyalóképes volt, rég használtam",
+            "lang_english" => "Alap társalgás, szakirodalom ismerete, e-mail, chat",
             "mol" => "Laborrendszer adminisztrálása",
             "bako" => "ERP rendszer adminisztrálása",
             "teamcom" => "Pénzügyi multimédia szoftver — Deutsche Bank, Citibank, C&L",
@@ -324,6 +341,7 @@ impl UiI18n for HungarianUi {
             "mc_countries" => "Magyarország, Németország, Ausztria",
             "mc_languages" => "Magyar, német, angol",
             "mc_certificates" => "Diploma, PM, SQL, JavaScript, AI, vezetéstechnika",
+            "mc_digital_skills" => "Széleskörű digitális ismeretek",
             // Tool hints
             "tl_visual_studio" => "Bosch, Vilati, Teamcom, Mediso",
             "tl_ms_office" => "Bosch — dokumentáció, tervezés",
