@@ -6,22 +6,44 @@ use crate::ui::state::{
 use crate::ui::i18n::UiI18n;
 
 pub fn render_filter_tab(s: AppState, i18n: &dyn UiI18n) -> Element {
+    // Companies: reversed (newest first)
+    let mut companies_display: Vec<&'static str> = COMPANY_KEYS.to_vec();
+    companies_display.reverse();
+
+    // Projects: reversed (newest first)
+    let mut projects_display: Vec<&'static str> = PROJECT_KEYS.to_vec();
+    projects_display.reverse();
+
+    // Job Roles: alphabetical by label
+    let mut job_roles_display: Vec<&'static str> = JOB_ROLE_KEYS.to_vec();
+    job_roles_display.sort_by_key(|k| i18n.item_label(k));
+
+    // Technical Skills: alphabetical by label
+    let mut skills_display: Vec<&'static str> = SKILL_KEYS.to_vec();
+    skills_display.sort_by_key(|k| i18n.item_label(k));
+
+    // Tools: alphabetical by label
+    let mut tools_display: Vec<&'static str> = TOOL_KEYS.to_vec();
+    tools_display.sort_by_key(|k| i18n.item_label(k));
+
     rsx! {
         // "Főbb jellemzőim" (My Main Characteristics) group
-        {render_section(s, i18n, i18n.section_main_chars(), MAIN_CHARS_KEYS, SectionKind::MainChars)}
+        {render_section(s, i18n, i18n.section_main_chars(), MAIN_CHARS_KEYS, MAIN_CHARS_KEYS.to_vec(), SectionKind::MainChars)}
 
-        // Companies (moved to where Workplaces was)
-        {render_section(s, i18n, i18n.section_companies(), COMPANY_KEYS, SectionKind::Companies)}
+        // Companies (reversed)
+        {render_section(s, i18n, i18n.section_companies(), COMPANY_KEYS, companies_display, SectionKind::Companies)}
 
-        // Sankey-based groups
-        {render_section(s, i18n, i18n.section_job_roles(), JOB_ROLE_KEYS, SectionKind::JobRoles)}
-        {render_section(s, i18n, i18n.section_projects(), PROJECT_KEYS, SectionKind::Projects)}
+        // Job Roles (alphabetical)
+        {render_section(s, i18n, i18n.section_job_roles(), JOB_ROLE_KEYS, job_roles_display, SectionKind::JobRoles)}
 
-        // Technical Skills (merged with Professional Skills)
-        {render_section(s, i18n, i18n.section_skills(), SKILL_KEYS, SectionKind::Skills)}
+        // Projects (reversed)
+        {render_section(s, i18n, i18n.section_projects(), PROJECT_KEYS, projects_display, SectionKind::Projects)}
 
-        // Tools (IDEs, testing tools, compilers, etc.)
-        {render_section(s, i18n, i18n.section_tools(), TOOL_KEYS, SectionKind::Tools)}
+        // Technical Skills (alphabetical)
+        {render_section(s, i18n, i18n.section_skills(), SKILL_KEYS, skills_display, SectionKind::Skills)}
+
+        // Tools (alphabetical)
+        {render_section(s, i18n, i18n.section_tools(), TOOL_KEYS, tools_display, SectionKind::Tools)}
     }
 }
 
@@ -50,12 +72,13 @@ fn render_section(
     s: AppState,
     i18n: &dyn UiI18n,
     section_title: &str,
-    keys: &'static [&'static str],
+    all_keys: &'static [&'static str],
+    display_keys: Vec<&'static str>,
     kind: SectionKind,
 ) -> Element {
     let signal = get_signal(s, kind);
     let selected = signal.read();
-    let all_selected = keys.iter().all(|k| selected.contains(k));
+    let all_selected = all_keys.iter().all(|k| selected.contains(k));
 
     let title = section_title.to_string();
     let select_all_label = i18n.filter_select_all().to_string();
@@ -73,15 +96,15 @@ fn render_section(
                         if all_selected {
                             sig.set(Vec::new());
                         } else {
-                            sig.set(keys.to_vec());
+                            sig.set(all_keys.to_vec());
                         }
                     },
                     if all_selected { "{clear_all_label}" } else { "{select_all_label}" }
                 }
             }
 
-            // Checkboxes
-            for key in keys.iter() {
+            // Checkboxes in display order
+            for key in display_keys.iter() {
                 {render_checkbox_item(s, i18n, key, kind)}
             }
         }

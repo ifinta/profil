@@ -65,7 +65,11 @@ pub fn render_display_tab(s: AppState, i18n: &dyn UiI18n) -> Element {
             {render_display_section(i18n, i18n.section_languages(), LANGUAGE_KEYS, "#fd7e14")}
         }
         if show_certificates {
-            {render_display_section(i18n, i18n.section_certificates(), CERTIFICATE_KEYS, "#6f42c1")}
+            {
+                let mut sorted_certs = CERTIFICATE_KEYS.to_vec();
+                sorted_certs.sort_by_key(|k| i18n.item_label(k));
+                render_display_section(i18n, i18n.section_certificates(), &sorted_certs, "#6f42c1")
+            }
         }
 
         // ── Project Experience ──
@@ -178,15 +182,20 @@ fn render_project_experience(
         || !selected_skills.is_empty()
         || !selected_tools.is_empty();
 
-    // If companies selected, restrict to those; otherwise consider all companies
+    // If companies selected, restrict to those; otherwise consider all companies.
+    // Reversed order (newest first).
     let company_order: Vec<&str> = if selected_companies.is_empty() {
-        COMPANY_KEYS.to_vec()
+        let mut v = COMPANY_KEYS.to_vec();
+        v.reverse();
+        v
     } else {
-        COMPANY_KEYS
+        let mut v: Vec<&str> = COMPANY_KEYS
             .iter()
             .filter(|c| selected_companies.contains(c))
             .copied()
-            .collect()
+            .collect();
+        v.reverse();
+        v
     };
 
     // Build filtered entries per company
@@ -195,6 +204,7 @@ fn render_project_experience(
     for &company_key in &company_order {
         let rows: Vec<ProjectRow> = PROJECT_EXPERIENCE
             .iter()
+            .rev()
             .filter(|e| e.company_key == company_key)
             .filter(|e| {
                 if !has_content_filter {
@@ -276,11 +286,9 @@ fn render_project_experience(
                                 }
                             }
                             // Tools
-                            if !row.tools.is_empty() {
-                                div { style: "margin-top: 2px;",
-                                    span { style: "font-size: 0.78em; color: #888; font-weight: 600;", "\u{1F527} " }
-                                    span { style: "font-size: 0.8em; color: #555;", "{row.tools}" }
-                                }
+                            div { style: "margin-top: 2px;",
+                                span { style: "font-size: 0.78em; color: #888; font-weight: 600;", "\u{1F527} " }
+                                span { style: "font-size: 0.8em; color: #555;", "{row.tools}" }
                             }
                         }
                     }

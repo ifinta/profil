@@ -125,7 +125,9 @@ fn build_pdf_html(s: &AppState, i18n: &dyn UiI18n) -> String {
         build_keyed_section(&mut html, i18n, i18n.section_languages(), LANGUAGE_KEYS, "#fd7e14");
     }
     if mc.contains(&"mc_certificates") {
-        build_keyed_section(&mut html, i18n, i18n.section_certificates(), CERTIFICATE_KEYS, "#6f42c1");
+        let mut sorted_certs = CERTIFICATE_KEYS.to_vec();
+        sorted_certs.sort_by_key(|k| i18n.item_label(k));
+        build_keyed_section(&mut html, i18n, i18n.section_certificates(), &sorted_certs, "#6f42c1");
     }
 
     // ── Project Experience ──
@@ -197,15 +199,20 @@ fn build_project_experience_section(
         || !skills.is_empty()
         || !tools.is_empty();
 
-    // If companies selected, restrict to those; otherwise consider all companies
+    // If companies selected, restrict to those; otherwise consider all companies.
+    // Reversed order (newest first).
     let company_order: Vec<&str> = if companies.is_empty() {
-        COMPANY_KEYS.to_vec()
+        let mut v = COMPANY_KEYS.to_vec();
+        v.reverse();
+        v
     } else {
-        COMPANY_KEYS
+        let mut v: Vec<&str> = COMPANY_KEYS
             .iter()
             .filter(|c| companies.contains(c))
             .copied()
-            .collect()
+            .collect();
+        v.reverse();
+        v
     };
 
     let mut has_any = false;
@@ -213,6 +220,7 @@ fn build_project_experience_section(
     for &company_key in &company_order {
         let entries: Vec<_> = PROJECT_EXPERIENCE
             .iter()
+            .rev()
             .filter(|e| e.company_key == company_key)
             .filter(|e| {
                 if !has_content_filter {
@@ -275,12 +283,10 @@ fn build_project_experience_section(
                     sk.join(", ")
                 ));
             }
-            if !tl.is_empty() {
-                html.push_str(&format!(
-                    "<div style=\"margin-top: 1px;\"><span style=\"font-size: 8px; color: #888;\">🔧 </span><span style=\"font-size: 9px; color: #555;\">{}</span></div>",
-                    tl.join(", ")
-                ));
-            }
+            html.push_str(&format!(
+                "<div style=\"margin-top: 1px;\"><span style=\"font-size: 8px; color: #888;\">🔧 </span><span style=\"font-size: 9px; color: #555;\">{}</span></div>",
+                tl.join(", ")
+            ));
 
             html.push_str("</div>");
         }

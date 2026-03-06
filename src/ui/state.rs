@@ -53,7 +53,10 @@ pub const COMPANY_KEYS: &[&str] = &[
 ];
 
 pub const CERTIFICATE_KEYS: &[&str] = &[
-    "cert_diploma", "cert_pm", "cert_sql", "cert_js", "cert_ai", "cert_driving",
+    "cert_dotnet", "cert_sql", "cert_canoe", "cert_daf",
+    "cert_diploma", "cert_germanistik", "cert_istqb", "cert_js",
+    "cert_moderation", "cert_access", "cert_pm", "cert_presentation",
+    "cert_ai", "cert_scrum", "cert_driving",
 ];
 
 // ── Sankey-based groups ──
