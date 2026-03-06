@@ -23,8 +23,9 @@ pub fn generate_pdf(s: &AppState, i18n: &dyn UiI18n) {
                 'body {{ font-family: sans-serif; margin: 0; padding: 20px 30px; color: #333; }}' +
                 '</style></head><body>' +
                 "{escaped}" +
-                '<div class="no-print" style="text-align:center; margin-top:20px;">' +
+                '<div class="no-print" style="text-align:center; margin-top:20px; display:flex; gap:12px; justify-content:center;">' +
                 '<button onclick="window.print()" style="padding:10px 30px; font-size:1em; font-weight:600; color:#fff; background:linear-gradient(135deg,#667eea,#764ba2); border:none; border-radius:8px; cursor:pointer;">\u{{1F5A8}} Print / Save PDF</button>' +
+                '<button onclick="window.close()" style="padding:10px 30px; font-size:1em; font-weight:600; color:#667eea; background:#fff; border:2px solid #667eea; border-radius:8px; cursor:pointer;">\u{{2715}} Cancel</button>' +
                 '</div></body></html>');
             w.document.close();
         }})()"#
