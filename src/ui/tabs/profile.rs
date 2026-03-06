@@ -60,9 +60,11 @@ pub fn render_profile_tab(s: AppState, i18n: &dyn UiI18n) -> Element {
         }
 
         div { style: "text-align: center;",
-            // Avatar placeholder (circle with initials)
-            div { style: "width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; box-shadow: 0 4px 15px rgba(102,126,234,0.4);",
-                span { style: "font-size: 2.5em; color: white; font-weight: bold;", "IF" }
+            // Profile photo (round)
+            img {
+                src: "photo.png",
+                alt: "Istvan Finta",
+                style: "width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin: 0 auto 16px; display: block; box-shadow: 0 4px 15px rgba(102,126,234,0.4); border: 3px solid #667eea;",
             }
 
             p { style: "margin: 0 0 4px; color: #667eea; font-weight: 600; font-size: 1.05em;",
