@@ -1,5 +1,5 @@
 // Cache version — increment on every deploy so the old cache gets cleared
-const CACHE_NAME = 'ifinta-v0.1005-';
+const CACHE_NAME = 'ifinta-v0.1006-';
 
 // We don't use a pre-cache list because Dioxus generates hashed filenames
 // (e.g. <project>-dxhABC123.js) that change with every build.

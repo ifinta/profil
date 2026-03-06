@@ -29,6 +29,11 @@ impl UiI18n for HungarianUi {
     fn filter_select_all(&self) -> &'static str { "Összes kijelölése" }
     fn filter_clear_all(&self) -> &'static str { "Összes törlése" }
 
+    fn section_workplaces(&self) -> &'static str { "Munkahelyek" }
+    fn section_job_roles(&self) -> &'static str { "Munkakörök" }
+    fn section_projects(&self) -> &'static str { "Projektek" }
+    fn section_expertise(&self) -> &'static str { "Szakmai ismeretek" }
+
     fn display_nothing_selected(&self) -> &'static str { "Válassz elemeket a Szűrő fülön a részletek megtekintéséhez." }
 
     fn item_label(&self, key: &str) -> &'static str {
@@ -70,6 +75,74 @@ impl UiI18n for HungarianUi {
             "cert_js" => "JavaScript bizonyítvány",
             "cert_ai" => "Programozás AI ügynökökkel",
             "cert_driving" => "Vezetéstechnikai tanfolyam",
+            // Workplaces (Sankey)
+            "wk_mol" => "MOL AG (1993)",
+            "wk_bako" => "Bäko-Hungaria (1993)",
+            "wk_teamcom" => "Teamcom (1995–2001)",
+            "wk_vilati" => "Vilati (2001–2005)",
+            "wk_mediso" => "Mediso (2005)",
+            "wk_bosch" => "Bosch (2005–2010)",
+            "wk_porsche" => "Porsche Informatik (2010–2016)",
+            "wk_sigmatek" => "Sigmatek (2016)",
+            "wk_bitnok" => "Bitnök (2016–2022)",
+            "wk_telekom" => "Telekom (2022–)",
+            // Job roles (Sankey)
+            "jr_admin" => "Adminisztrátor",
+            "jr_sw_dev" => "Szoftverfejlesztő",
+            "jr_dept_head" => "Részlegvezető",
+            "jr_tester" => "Teszter",
+            "jr_test_mgr" => "Tesztmenedzser",
+            "jr_test_dev" => "Tesztfejlesztő",
+            "jr_project_mgr" => "Projektmenedzser",
+            // Projects (Sankey)
+            "pj_labor" => "Labor",
+            "pj_erp_system" => "ERP-Rendszer",
+            "pj_db_finance" => "Deutsche Bank Építésfinanszírozás",
+            "pj_cwl_kwg" => "C&L Deutsche Revision KWG Novelle",
+            "pj_authors_dream" => "Author's Dream",
+            "pj_citibank" => "Citibank Pénzmosás elleni védekezés",
+            "pj_junction" => "Csomópont ellenőrzés",
+            "pj_btc5000" => "BTC5000",
+            "pj_sk24" => "SK24",
+            "pj_ocit" => "OCIT",
+            "pj_debrecen" => "Debrecen",
+            "pj_medical" => "Orvosi képfeldolgozás",
+            "pj_car_body" => "Személyautó Body Computer",
+            "pj_dcdc" => "DC/DC átalakító",
+            "pj_erp_bosch" => "Erőforrásgazdálkodás",
+            "pj_test_designer" => "TestDesigner",
+            "pj_test_net" => "Test.NET",
+            "pj_truck_body" => "Kamion Body Computer",
+            "pj_test_tools" => "Teszt eszközök feljavítása",
+            "pj_window_lifter" => "Ablakemelő",
+            "pj_contract" => "Szerződés (Auftrag)",
+            "pj_asanet" => "ASA-Net",
+            "pj_lynx" => "Lynx",
+            "pj_sms_email" => "SMS-eMail",
+            "pj_customer_cards" => "Ügyfélkártyák",
+            "pj_e_billing" => "Elektronikus számlázás",
+            "pj_mein_auto" => "Mein-Auto App",
+            "pj_mobil_car" => "Mobil-Autóátvétel",
+            "pj_supplier_inv" => "Szállító számlák ellenőrzése",
+            "pj_prufloader" => "Prüfloader.NET",
+            "pj_vortexledger" => "Vortexledger",
+            "pj_georoute" => "GIS GeoRoute",
+            // Expertise (Sankey)
+            "ex_admin" => "Adminisztrálás",
+            "ex_c_win" => "C win/GUI",
+            "ex_c_embedded" => "C embedded",
+            "ex_cpp_win" => "C++ win/GUI",
+            "ex_cpp_linux" => "C++ linux/server",
+            "ex_csharp" => "C#",
+            "ex_sql" => "SQL",
+            "ex_multimedia" => "Multimédia-programozás",
+            "ex_system_design" => "Rendszertervezés (System-Design)",
+            "ex_project_mgmt" => "Projektmenedzsment",
+            "ex_leading" => "Vezetés",
+            "ex_manual_test" => "Kézi tesztelés",
+            "ex_auto_testing" => "Automatizált tesztelés",
+            "ex_auto_test_dev" => "Automatizált-teszt fejlesztés",
+            "ex_test_mgmt" => "Tesztmenedzsment",
             _ => "",
         }
     }
@@ -113,10 +186,161 @@ impl UiI18n for HungarianUi {
             "cert_js" => "JavaScript fejlesztői bizonyítvány",
             "cert_ai" => "Programozás AI ügynökökkel tanfolyam",
             "cert_driving" => "Haladó vezetéstechnika a biztonságért",
+            // Workplace hints
+            "wk_mol" => "Laborrendszer adminisztrálása",
+            "wk_bako" => "ERP rendszer adminisztrálása",
+            "wk_teamcom" => "Pénzügyi multimédia szoftver — Deutsche Bank, Citibank, C&L",
+            "wk_vilati" => "Forgalmi csomópontvezérlés, beágyazott C, részlegvezetés",
+            "wk_mediso" => "Orvosi képfeldolgozás",
+            "wk_bosch" => "Autóipari ECU fejlesztés és teszt — Body Computer, ablakemelő",
+            "wk_porsche" => "Kereskedésmenedzsment rendszerek — C++ Linux/Windows, SQL",
+            "wk_sigmatek" => "Prüfloader.NET — ipari teszteszköz C#-ban",
+            "wk_bitnok" => "Blockchain projektmenedzsment — VortexLedger",
+            "wk_telekom" => "GIS / GeoRoute adminisztráció",
+            // Job role hints
+            "jr_admin" => "MOL, Bäko-Hungaria, Telekom",
+            "jr_sw_dev" => "Teamcom, Vilati, Mediso, Bosch, Porsche, Sigmatek",
+            "jr_dept_head" => "Vilati — OCIT, Debrecen",
+            "jr_tester" => "Bosch, Porsche Informatik",
+            "jr_test_mgr" => "Bosch — Kamion Body Computer, teszt eszközök",
+            "jr_test_dev" => "Bosch — Ablakemelő, Kamion Body Computer",
+            "jr_project_mgr" => "Bitnök — Vortexledger",
+            // Project hints
+            "pj_labor" => "MOL AG — laborrendszer",
+            "pj_erp_system" => "Bäko-Hungaria — vállalatirányítási rendszer",
+            "pj_db_finance" => "Teamcom — Deutsche Bank építésfinanszírozás",
+            "pj_cwl_kwg" => "Teamcom — C&L Deutsche Revision",
+            "pj_authors_dream" => "Teamcom — multimédia szerkesztő",
+            "pj_citibank" => "Teamcom — pénzmosás elleni védekezés",
+            "pj_junction" => "Vilati — forgalmi csomópontvezérlés",
+            "pj_btc5000" => "Vilati — forgalomirányító vezérlő",
+            "pj_sk24" => "Vilati — lámpakapcsoló kártya, valós idejű szinkron",
+            "pj_ocit" => "Vilati — részlegvezetés, OCIT szabvány",
+            "pj_debrecen" => "Vilati — részlegvezetés, Debrecen projekt",
+            "pj_medical" => "Mediso — orvosi képfeldolgozás",
+            "pj_car_body" => "Bosch — személyautó Body Computer, C embedded",
+            "pj_dcdc" => "Bosch — DC/DC átalakító, C embedded",
+            "pj_erp_bosch" => "Bosch — erőforrásgazdálkodás, C#",
+            "pj_test_designer" => "Bosch — teszttervező eszköz, C#",
+            "pj_test_net" => "Bosch — tesztfejlesztő-framework, C#",
+            "pj_truck_body" => "Bosch — kamion Body Computer, tesztmenedzsment",
+            "pj_test_tools" => "Bosch — teszt eszközök feljavítása",
+            "pj_window_lifter" => "Bosch — ablakemelő, automatizált tesztelés",
+            "pj_contract" => "Porsche — szerződéskezelés, C++ Linux/Windows",
+            "pj_asanet" => "Porsche — ASA-Net, C++ Linux/Windows",
+            "pj_lynx" => "Porsche — Lynx, C++ linux/server",
+            "pj_sms_email" => "Porsche — SMS-eMail, C++ Linux/Windows",
+            "pj_customer_cards" => "Porsche — ügyfélkártyák, C++ Linux/Windows",
+            "pj_e_billing" => "Porsche — elektronikus számlázás, C++ Linux/Windows",
+            "pj_mein_auto" => "Porsche — Mein-Auto App, C++ linux/server",
+            "pj_mobil_car" => "Porsche — mobil-autóátvétel, C++ linux/server",
+            "pj_supplier_inv" => "Porsche — szállító számlák, C++ Linux/Windows",
+            "pj_prufloader" => "Sigmatek — ipari teszteszköz, C#",
+            "pj_vortexledger" => "Bitnök — blockchain open ledger",
+            "pj_georoute" => "Telekom — GIS/GeoRoute adminisztráció",
+            // Expertise hints
+            "ex_admin" => "MOL, Bäko-Hungaria, Telekom",
+            "ex_c_win" => "Teamcom, Mediso — Windows asztali alkalmazások",
+            "ex_c_embedded" => "Vilati, Bosch — mikrokontroller firmware",
+            "ex_cpp_win" => "Mediso, Porsche — C++ Windows GUI",
+            "ex_cpp_linux" => "Porsche — C++ Linux szerver",
+            "ex_csharp" => "Bosch, Sigmatek — .NET alkalmazások",
+            "ex_sql" => "Porsche — adatbázisok, tárolt eljárások",
+            "ex_multimedia" => "Teamcom — interaktív pénzügyi prezentációk",
+            "ex_system_design" => "Vilati — forgalomirányítási rendszertervezés",
+            "ex_project_mgmt" => "Vilati, Bitnök — projektmenedzsment",
+            "ex_leading" => "Vilati — szoftverfejlesztő részleg vezetése",
+            "ex_manual_test" => "Bosch, Porsche — funkcionális és regressziós tesztelés",
+            "ex_auto_testing" => "Bosch — automatizált HW/SW tesztelés",
+            "ex_auto_test_dev" => "Bosch — automatizált teszteszközök fejlesztése",
+            "ex_test_mgmt" => "Bosch — tesztstratégia, tervezés, jelentéskészítés",
             _ => "",
         }
     }
 
+    fn toast_update_available(&self) -> &'static str { "Új verzió érhető el!" }
+    fn btn_update_now(&self) -> &'static str { "Frissítés" }
+
+    fn pdf_filter_choices(&self) -> &'static str { "Szűrő választások" }
     fn btn_generate_pdf(&self) -> &'static str { "PDF generálás" }
-    fn pdf_filter_choices(&self) -> &'static str { "Kiválasztott szűrők" }
+
+    fn role_section_label(&self) -> &'static str { "Pozíció" }
+    fn role_label(&self, key: &str) -> &'static str {
+        match key {
+            "po" => "Product Owner",
+            "szm" => "Szoftvermérnök",
+            "tm" => "Tesztmenedzser",
+            _ => "",
+        }
+    }
+    fn role_title(&self, key: &str) -> &'static str {
+        match key {
+            "po" => "Product Owner",
+            "szm" => "Szoftvermérnök",
+            "tm" => "Tesztmenedzser",
+            _ => "Szoftvermérnök",
+        }
+    }
+    fn role_target_title(&self) -> &'static str { "Célkitűzés" }
+    fn role_target_text(&self, key: &str) -> &'static str {
+        match key {
+            "po" => "Tapasztalt szoftvermérnökként célom, hogy product owneri szerepkörben \
+                kamatoztassam kiterjedt termék- és folyamatmenedzsment tapasztalataimat. \
+                Célom a felhasználói élmény javítása ügyfél-visszajelzések elemzésén, \
+                agilis fejlesztési környezetben szerzett gyakorlatommal, valamint \
+                rendszerszintű gondolkodásommal.",
+            "szm" => "Tapasztalt szoftvermérnökként, több mint egy évtizedes iparági \
+                tapasztalattal (különösen C, C#, C++, SQL, beágyazott rendszerek területén), \
+                szeretném tudásomat és innovatív problémamegoldó készségemet egy dinamikus, \
+                növekvő szervezetben kamatoztatni. Célom, hogy magas minőségű \
+                szoftvermegoldások fejlesztésével hozzájáruljak a szervezet sikeréhez, \
+                miközben folyamatosan fejlesztem szakmai ismereteimet az új technológiák terén.",
+            "tm" => "Több évtizedes szoftverfejlesztési háttérrel rendelkezem, kiterjedt \
+                tesztmenedzseri tapasztalattal komplex rendszerek területén. Szakértelmem \
+                kiterjed a tesztelési folyamatok megtervezésére, menedzselésére és \
+                automatizálására, valamint a minőségbiztosításra. Jártas vagyok a manuális \
+                és automatizált tesztelés módszertanaiban.",
+            _ => "",
+        }
+    }
+    fn role_strengths_title(&self) -> &'static str { "Erősségek" }
+    fn role_strengths(&self, key: &str) -> &'static [(&'static str, &'static str)] {
+        match key {
+            "po" => &[
+                ("Termék- és folyamatmenedzsment",
+                 "Különböző banki és autóipari rendszerek fejlesztésében, támogatásában és optimalizálásában szerzett gyakorlat."),
+                ("Analitikus szemlélet",
+                 "Komplex szoftveres és HW közeli programozási feladatok megoldása."),
+                ("Precíz munkavégzés",
+                 "Részletekre való odafigyelés és pontos dokumentáció."),
+                ("Együttműködés és kommunikáció",
+                 "Fejlesztői csapatok vezetésében és társterületekkel való együttműködésben szerzett tapasztalat."),
+                ("Agilis környezet",
+                 "Digitális csatornák és agilis fejlesztési környezet ismerete."),
+            ],
+            "szm" => &[
+                ("Szoftverfejlesztés és tesztelés",
+                 "Széleskörű tapasztalat C, C++, C# nyelvekkel, beleértve valós idejű rendszerek szinkronizációját és automatizált tesztkeretrendszerek kidolgozását."),
+                ("Rendszerszintű gondolkodás",
+                 "Gépészmérnöki háttér, amely segíti a hardver-közeli programozást és komplex mechatronikai rendszerek megértését."),
+                ("Projektmenedzsment és vezetés",
+                 "Szoftverfejlesztő részleg vezetése, rendszerteszt-koordináció, Scrum és ISTQB módszertanok ismerete."),
+                ("Technológiai sokszínűség",
+                 "Linux, Windows, SQL, webfejlesztés és DLT koncepciók ismerete."),
+                ("Problémamegoldás",
+                 "Gyors tanulási készség, kiváló hibakeresési és javítási képesség."),
+            ],
+            "tm" => &[
+                ("Minőségorientált megközelítés",
+                 "Elkötelezettség a legmagasabb szakmai előírásoknak való megfelelés iránt (ISTQB, Bosch belső standardok)."),
+                ("Proaktív problémamegoldás",
+                 "Módszeres és kitartó problémagyökér-keresés, optimális megoldások vagy kompromisszumok megtalálása."),
+                ("Prototípusok és frameworkök",
+                 "Belső teszt-frameworkök (pl. Test.NET) tervezése és kivitelezése a tesztautomatizálás megvalósításához."),
+                ("Realisztikus tesztelési stratégia",
+                 "A tesztelési környezet validációjának és a teszteredmények produkálásának összehangolása a tervezés során."),
+            ],
+            _ => &[],
+        }
+    }
 }

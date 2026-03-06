@@ -32,6 +32,12 @@ pub trait UiI18n {
     fn filter_select_all(&self) -> &'static str;
     fn filter_clear_all(&self) -> &'static str;
 
+    // Sankey-based filter sections
+    fn section_workplaces(&self) -> &'static str;
+    fn section_job_roles(&self) -> &'static str;
+    fn section_projects(&self) -> &'static str;
+    fn section_expertise(&self) -> &'static str;
+
     // Display tab
     fn display_nothing_selected(&self) -> &'static str;
 
@@ -41,9 +47,22 @@ pub trait UiI18n {
     // Hints for filter items
     fn item_hint(&self, key: &str) -> &'static str;
 
-    // PDF generation
-    fn btn_generate_pdf(&self) -> &'static str;
+    // Toast / SW update
+    fn toast_update_available(&self) -> &'static str;
+    fn btn_update_now(&self) -> &'static str;
+
+    // PDF
     fn pdf_filter_choices(&self) -> &'static str;
+    fn btn_generate_pdf(&self) -> &'static str;
+
+    // Role selector (Profile tab)
+    fn role_section_label(&self) -> &'static str;
+    fn role_label(&self, key: &str) -> &'static str;
+    fn role_title(&self, key: &str) -> &'static str;
+    fn role_target_title(&self) -> &'static str;
+    fn role_target_text(&self, key: &str) -> &'static str;
+    fn role_strengths_title(&self) -> &'static str;
+    fn role_strengths(&self, key: &str) -> &'static [(&'static str, &'static str)];
 }
 
 /// Factory function
