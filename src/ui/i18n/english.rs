@@ -124,7 +124,4 @@ impl UiI18n for EnglishUi {
 
     fn btn_generate_pdf(&self) -> &'static str { "Generate PDF" }
     fn pdf_filter_choices(&self) -> &'static str { "Selected Filters" }
-
-    fn toast_update_available(&self) -> &'static str { "A new version is available!" }
-    fn btn_update_now(&self) -> &'static str { "Update Now" }
 }

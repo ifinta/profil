@@ -119,7 +119,4 @@ impl UiI18n for GermanUi {
 
     fn btn_generate_pdf(&self) -> &'static str { "PDF erstellen" }
     fn pdf_filter_choices(&self) -> &'static str { "Ausgewählte Filter" }
-
-    fn toast_update_available(&self) -> &'static str { "Eine neue Version ist verfügbar!" }
-    fn btn_update_now(&self) -> &'static str { "Jetzt aktualisieren" }
 }

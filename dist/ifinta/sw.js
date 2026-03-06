@@ -1,5 +1,5 @@
 // Cache version — increment on every deploy so the old cache gets cleared
-const CACHE_NAME = 'ifinta-v0.1003-';
+const CACHE_NAME = 'ifinta-v0.1004-';
 
 // ── SW-side log ring buffer (max 100) ──
 const _swLogBuffer = [];
