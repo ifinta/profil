@@ -8,11 +8,15 @@ pub fn render_display_tab(s: AppState, i18n: &dyn UiI18n) -> Element {
     let companies = s.selected_companies.read().clone();
     let main_chars = s.selected_main_chars.read().clone();
     let tools = s.selected_tools.read().clone();
+    let job_roles = s.selected_job_roles.read().clone();
+    let projects = s.selected_projects.read().clone();
 
     let has_anything = !skills.is_empty()
         || !companies.is_empty()
         || !main_chars.is_empty()
-        || !tools.is_empty();
+        || !tools.is_empty()
+        || !job_roles.is_empty()
+        || !projects.is_empty();
 
     if !has_anything {
         return rsx! {
@@ -30,6 +34,10 @@ pub fn render_display_tab(s: AppState, i18n: &dyn UiI18n) -> Element {
     let show_countries = main_chars.contains(&"mc_countries");
     let show_languages = main_chars.contains(&"mc_languages");
     let show_certificates = main_chars.contains(&"mc_certificates");
+
+    // Show project experience if any content filter or company is selected
+    let has_content_filter = !job_roles.is_empty() || !projects.is_empty() || !skills.is_empty() || !tools.is_empty();
+    let show_project_experience = has_content_filter || !companies.is_empty();
 
     rsx! {
         // Generate PDF button
@@ -60,19 +68,9 @@ pub fn render_display_tab(s: AppState, i18n: &dyn UiI18n) -> Element {
             {render_display_section(i18n, i18n.section_certificates(), CERTIFICATE_KEYS, "#6f42c1")}
         }
 
-        if !skills.is_empty() {
-            {render_display_section(i18n, i18n.section_skills(), &skills, "#667eea")}
-        }
-        if !companies.is_empty() {
-            {render_display_section(i18n, i18n.section_companies(), &companies, "#17a2b8")}
-        }
-        if !tools.is_empty() {
-            {render_display_section(i18n, i18n.section_tools(), &tools, "#20c997")}
-        }
-
-        // ── Project Experience (pages 4+ of the PDF, rendered as compact components) ──
-        if !companies.is_empty() {
-            {render_project_experience(i18n, &companies, &s.selected_job_roles.read(), &s.selected_projects.read(), &skills, &tools)}
+        // ── Project Experience ──
+        if show_project_experience {
+            {render_project_experience(i18n, &companies, &job_roles, &projects, &skills, &tools)}
         }
     }
 }
@@ -160,6 +158,13 @@ fn render_display_section(
 
 /// Render project experience as compact components grouped by company.
 /// Each company is a card with a header and a table of project rows.
+///
+/// Filter logic:
+/// - Companies act as a scope filter (restrict to those companies; if empty, all companies).
+/// - Job roles, Projects, Skills, Tools are content filters (OR across groups).
+///   If any content filter is active, a project is shown when it matches ANY group.
+/// - If no content filters are active but companies are selected, show all projects
+///   in those companies.
 fn render_project_experience(
     i18n: &dyn UiI18n,
     selected_companies: &[&str],
@@ -168,12 +173,21 @@ fn render_project_experience(
     selected_skills: &[&str],
     selected_tools: &[&str],
 ) -> Element {
-    // Collect companies that have matching projects, preserving COMPANY_KEYS order
-    let company_order: Vec<&str> = COMPANY_KEYS
-        .iter()
-        .filter(|c| selected_companies.contains(c))
-        .copied()
-        .collect();
+    let has_content_filter = !selected_job_roles.is_empty()
+        || !selected_projects.is_empty()
+        || !selected_skills.is_empty()
+        || !selected_tools.is_empty();
+
+    // If companies selected, restrict to those; otherwise consider all companies
+    let company_order: Vec<&str> = if selected_companies.is_empty() {
+        COMPANY_KEYS.to_vec()
+    } else {
+        COMPANY_KEYS
+            .iter()
+            .filter(|c| selected_companies.contains(c))
+            .copied()
+            .collect()
+    };
 
     // Build filtered entries per company
     let mut company_entries: Vec<(&str, Vec<ProjectRow>)> = Vec::new();
@@ -183,31 +197,20 @@ fn render_project_experience(
             .iter()
             .filter(|e| e.company_key == company_key)
             .filter(|e| {
-                // If specific projects selected, filter by them
-                if !selected_projects.is_empty() {
-                    if !selected_projects.contains(&e.project_key) {
-                        return false;
-                    }
+                if !has_content_filter {
+                    // No content filters: show all projects in the selected companies
+                    return true;
                 }
-                // If specific job roles selected, require at least one match
-                if !selected_job_roles.is_empty() {
-                    if !e.job_role_keys.iter().any(|r| selected_job_roles.contains(r)) {
-                        return false;
-                    }
-                }
-                // If specific skills selected, require at least one match
-                if !selected_skills.is_empty() {
-                    if !e.skill_keys.iter().any(|s| selected_skills.contains(s)) {
-                        return false;
-                    }
-                }
-                // If specific tools selected, require at least one match
-                if !selected_tools.is_empty() {
-                    if !e.tool_keys.iter().any(|t| selected_tools.contains(t)) {
-                        return false;
-                    }
-                }
-                true
+                // OR logic: show if the project matches ANY active content filter group
+                let matches_project = !selected_projects.is_empty()
+                    && selected_projects.contains(&e.project_key);
+                let matches_role = !selected_job_roles.is_empty()
+                    && e.job_role_keys.iter().any(|r| selected_job_roles.contains(r));
+                let matches_skill = !selected_skills.is_empty()
+                    && e.skill_keys.iter().any(|s| selected_skills.contains(s));
+                let matches_tool = !selected_tools.is_empty()
+                    && e.tool_keys.iter().any(|t| selected_tools.contains(t));
+                matches_project || matches_role || matches_skill || matches_tool
             })
             .map(|e| ProjectRow {
                 date_interval: e.date_interval.to_string(),

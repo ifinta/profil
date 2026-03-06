@@ -79,27 +79,6 @@ fn build_pdf_html(s: &AppState, i18n: &dyn UiI18n) -> String {
 
     // ── Filter choices (small text) ──
     html.push_str("<hr style=\"border: none; border-top: 1px solid #ddd; margin: 10px 0;\">");
-    html.push_str(&format!(
-        "<p style=\"margin: 0 0 6px; font-size: 10px; color: #999; font-weight: 600;\">{}</p>",
-        esc(i18n.pdf_filter_choices())
-    ));
-
-    let filter_sections: Vec<(&str, Vec<&str>)> = vec![
-        (i18n.section_skills(), s.selected_skills.read().clone()),
-        (i18n.section_companies(), s.selected_companies.read().clone()),
-        (i18n.section_tools(), s.selected_tools.read().clone()),
-    ];
-
-    for (section_name, keys) in &filter_sections {
-        if !keys.is_empty() {
-            let labels: Vec<String> = keys.iter().map(|k| esc(i18n.item_label(k))).collect();
-            html.push_str(&format!(
-                "<p style=\"margin: 0 0 2px; font-size: 9px; color: #aaa;\"><b>{}:</b> {}</p>",
-                esc(section_name),
-                labels.join(", ")
-            ));
-        }
-    }
 
     // ── Display content (detailed sections) ──
     html.push_str("<hr style=\"border: none; border-top: 1px solid #ddd; margin: 10px 0;\">");
@@ -149,53 +128,17 @@ fn build_pdf_html(s: &AppState, i18n: &dyn UiI18n) -> String {
         build_keyed_section(&mut html, i18n, i18n.section_certificates(), CERTIFICATE_KEYS, "#6f42c1");
     }
 
+    // ── Project Experience ──
     let sk = s.selected_skills.read();
     let cm = s.selected_companies.read();
     let tl = s.selected_tools.read();
+    let jr = s.selected_job_roles.read();
+    let pj = s.selected_projects.read();
 
-    let display_sections: Vec<(&str, &[&str], &str)> = vec![
-        (i18n.section_skills(), &*sk, "#667eea"),
-        (i18n.section_companies(), &*cm, "#17a2b8"),
-        (i18n.section_tools(), &*tl, "#20c997"),
-    ];
+    let has_content_filter = !jr.is_empty() || !pj.is_empty() || !sk.is_empty() || !tl.is_empty();
+    let show_project_experience = has_content_filter || !cm.is_empty();
 
-    for (title, keys, color) in &display_sections {
-        if keys.is_empty() {
-            continue;
-        }
-        html.push_str(&format!(
-            "<div style=\"margin-bottom: 12px; border-left: 3px solid {}; padding: 8px 12px; background: #fafbfc; border-radius: 0 6px 6px 0;\">",
-            color
-        ));
-        html.push_str(&format!(
-            "<h4 style=\"margin: 0 0 6px; color: {}; font-size: 13px;\">{}</h4>",
-            color,
-            esc(title)
-        ));
-
-        for key in *keys {
-            let label = esc(i18n.item_label(key));
-            let hint = i18n.item_hint(key);
-            html.push_str(&format!(
-                "<div style=\"padding: 3px 0; border-bottom: 1px solid #eee;\"><span style=\"font-size: 11px; color: #333; font-weight: 600;\">{}</span>",
-                label
-            ));
-            if !hint.is_empty() {
-                html.push_str(&format!(
-                    " <span style=\"font-size: 9px; color: #888;\">— {}</span>",
-                    esc(hint)
-                ));
-            }
-            html.push_str("</div>");
-        }
-
-        html.push_str("</div>");
-    }
-
-    // ── Project Experience (compact table per company) ──
-    if !cm.is_empty() {
-        let jr = s.selected_job_roles.read();
-        let pj = s.selected_projects.read();
+    if show_project_experience {
         build_project_experience_section(&mut html, i18n, &cm, &jr, &pj, &sk, &tl);
     }
 
@@ -249,11 +192,21 @@ fn build_project_experience_section(
     skills: &[&str],
     tools: &[&str],
 ) {
-    let company_order: Vec<&str> = COMPANY_KEYS
-        .iter()
-        .filter(|c| companies.contains(c))
-        .copied()
-        .collect();
+    let has_content_filter = !job_roles.is_empty()
+        || !projects.is_empty()
+        || !skills.is_empty()
+        || !tools.is_empty();
+
+    // If companies selected, restrict to those; otherwise consider all companies
+    let company_order: Vec<&str> = if companies.is_empty() {
+        COMPANY_KEYS.to_vec()
+    } else {
+        COMPANY_KEYS
+            .iter()
+            .filter(|c| companies.contains(c))
+            .copied()
+            .collect()
+    };
 
     let mut has_any = false;
 
@@ -262,19 +215,20 @@ fn build_project_experience_section(
             .iter()
             .filter(|e| e.company_key == company_key)
             .filter(|e| {
-                if !projects.is_empty() && !projects.contains(&e.project_key) {
-                    return false;
+                if !has_content_filter {
+                    // No content filters: show all projects in selected companies
+                    return true;
                 }
-                if !job_roles.is_empty() && !e.job_role_keys.iter().any(|r| job_roles.contains(r)) {
-                    return false;
-                }
-                if !skills.is_empty() && !e.skill_keys.iter().any(|s| skills.contains(s)) {
-                    return false;
-                }
-                if !tools.is_empty() && !e.tool_keys.iter().any(|t| tools.contains(t)) {
-                    return false;
-                }
-                true
+                // OR logic: show if the project matches ANY active content filter group
+                let matches_project = !projects.is_empty()
+                    && projects.contains(&e.project_key);
+                let matches_role = !job_roles.is_empty()
+                    && e.job_role_keys.iter().any(|r| job_roles.contains(r));
+                let matches_skill = !skills.is_empty()
+                    && e.skill_keys.iter().any(|s| skills.contains(s));
+                let matches_tool = !tools.is_empty()
+                    && e.tool_keys.iter().any(|t| tools.contains(t));
+                matches_project || matches_role || matches_skill || matches_tool
             })
             .collect();
 
