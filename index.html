@@ -69,8 +69,8 @@
             // 3. Register (not re-register) the SW.
             //    updateViaCache:'none' ensures the browser always fetches sw.js
             //    from the network, bypassing any HTTP cache or file lock.
-            navigator.serviceWorker.register('/ifinta/sw.js', {
-                scope: '/ifinta/',
+            navigator.serviceWorker.register('/profil/sw.js', {
+                scope: '/profil/',
                 updateViaCache: 'none'
             }).then(function(reg) {
                 console.log('[App] SW registered, scope:', reg.scope);

@@ -4,6 +4,5 @@
 # A public könyvtárat az index.html-lel együtt szintén ide rakja.
 
 [web.app]
-# Az /ifinta/ prefix kell, mert a szerveren https://zsozso.info/ifinta/ alatt fut.
-# Enélkül a generált <script> tag /./assets/... lenne /ifinta/assets/... helyett.
-base_path = "ifinta"
+# GitHub Pages: https://ifinta.github.io/profil/
+base_path = "profil"

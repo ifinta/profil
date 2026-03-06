@@ -1,5 +1,5 @@
 // Cache version — increment on every deploy so the old cache gets cleared
-const CACHE_NAME = 'ifinta-v0.1000-';
+const CACHE_NAME = 'profil-v0.1000-';
 
 // We don't use a pre-cache list because Dioxus generates hashed filenames
 // (e.g. <project>-dxhABC123.js) that change with every build.
@@ -36,7 +36,7 @@ self.addEventListener('activate', event => {
             // that is NOT an update and must not trigger a reload loop.
             if (isUpdate) {
                 return self.clients.matchAll({ type: 'window' }).then(clients => {
-                    clients.forEach(c => c.postMessage({ type: '__ZSOZSO_SW_UPDATED' }));
+                    clients.forEach(c => c.postMessage({ type: '__IFINTA_SW_UPDATED' }));
                 });
             }
         })
