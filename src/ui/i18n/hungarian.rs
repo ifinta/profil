@@ -13,14 +13,6 @@ impl UiI18n for HungarianUi {
     fn profile_location(&self) -> &'static str { "Magyarország" }
     fn profile_email(&self) -> &'static str { "istvan_finta@yahoo.com" }
     fn profile_phone(&self) -> &'static str { "+36 70 343 9517" }
-    fn profile_about(&self) -> &'static str { "Rólam" }
-    fn profile_about_text(&self) -> &'static str {
-        "Tapasztalt szoftvermérnök, több mint 30 éves iparági tapasztalattal. \
-         Szakterületeim: beágyazott rendszerek, asztali és webes alkalmazások, \
-         tesztautomatizálás és projektmenedzsment. Magyarországon, \
-         Németországban és Ausztriában dolgoztam az autóipar, forgalomirányítás, \
-         orvosi képalkotás, pénzügyi szoftverek és blockchain területein."
-    }
 
     fn section_skills(&self) -> &'static str { "Technikai ismeretek" }
     fn section_countries(&self) -> &'static str { "Országok" }
@@ -369,10 +361,6 @@ impl UiI18n for HungarianUi {
         }
     }
 
-    fn toast_update_available(&self) -> &'static str { "Új verzió érhető el!" }
-    fn btn_update_now(&self) -> &'static str { "Frissítés" }
-
-    fn pdf_filter_choices(&self) -> &'static str { "Szűrő választások" }
     fn btn_generate_pdf(&self) -> &'static str { "PDF generálás" }
 
     fn role_section_label(&self) -> &'static str { "Pozíció" }

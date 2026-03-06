@@ -13,14 +13,6 @@ impl UiI18n for GermanUi {
     fn profile_location(&self) -> &'static str { "Ungarn" }
     fn profile_email(&self) -> &'static str { "istvan_finta@yahoo.com" }
     fn profile_phone(&self) -> &'static str { "+36 70 343 9517" }
-    fn profile_about(&self) -> &'static str { "Über mich" }
-    fn profile_about_text(&self) -> &'static str {
-        "Erfahrener Software-Entwickler mit über 30 Jahren Branchenerfahrung. \
-         Expertise in eingebetteten Systemen, Desktop- und Webanwendungen, \
-         Testautomatisierung und Projektmanagement. Tätig in Ungarn, \
-         Deutschland und Österreich in den Bereichen Automotive, Verkehrssteuerung, \
-         medizinische Bildgebung, Finanzsoftware und Blockchain."
-    }
 
     fn section_skills(&self) -> &'static str { "Technische Kenntnisse" }
     fn section_countries(&self) -> &'static str { "Länder" }
@@ -369,10 +361,6 @@ impl UiI18n for GermanUi {
         }
     }
 
-    fn toast_update_available(&self) -> &'static str { "Eine neue Version ist verfügbar!" }
-    fn btn_update_now(&self) -> &'static str { "Jetzt aktualisieren" }
-
-    fn pdf_filter_choices(&self) -> &'static str { "Filterauswahl" }
     fn btn_generate_pdf(&self) -> &'static str { "PDF erstellen" }
 
     fn role_section_label(&self) -> &'static str { "Rolle" }

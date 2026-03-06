@@ -21,8 +21,6 @@ pub trait UiI18n {
     fn profile_location(&self) -> &'static str;
     fn profile_email(&self) -> &'static str;
     fn profile_phone(&self) -> &'static str;
-    fn profile_about(&self) -> &'static str;
-    fn profile_about_text(&self) -> &'static str;
 
     // Filter tab section headers
     fn section_skills(&self) -> &'static str;
@@ -59,12 +57,7 @@ pub trait UiI18n {
     // Hints for filter items
     fn item_hint(&self, key: &str) -> &'static str;
 
-    // Toast / SW update
-    fn toast_update_available(&self) -> &'static str;
-    fn btn_update_now(&self) -> &'static str;
-
     // PDF
-    fn pdf_filter_choices(&self) -> &'static str;
     fn btn_generate_pdf(&self) -> &'static str;
 
     // Role selector (Profile tab)

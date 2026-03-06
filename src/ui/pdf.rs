@@ -90,22 +90,22 @@ fn build_pdf_html(s: &AppState, i18n: &dyn UiI18n) -> String {
     // ── Filter choices (small text) ──
     html.push_str("<hr style=\"border: none; border-top: 1px solid #ddd; margin: 10px 0;\">");
 
-    // ── Display content (detailed sections) ──
-    html.push_str("<hr style=\"border: none; border-top: 1px solid #ddd; margin: 10px 0;\">");
+    // ── Begin 3-column layout ──
+    html.push_str("<div class=\"col-content\">");
 
     // ── "Főbb jellemzőim" items ──
     let mc = s.selected_main_chars.read();
     let role_key = s.selected_role.read().key();
 
     if mc.contains(&"mc_strengths") {
-        html.push_str("<div style=\"margin-bottom: 12px; border-left: 3px solid #764ba2; padding: 8px 12px; background: #fafbfc; border-radius: 0 6px 6px 0;\">");
+        html.push_str("<div style=\"margin-bottom: 10px; border-left: 3px solid #764ba2; padding: 6px 10px; background: #fafbfc; border-radius: 0 6px 6px 0;\">");
         html.push_str(&format!(
-            "<h4 style=\"margin: 0 0 6px; color: #764ba2; font-size: 13px;\">{}</h4>",
+            "<h4 style=\"margin: 0 0 4px; color: #764ba2; font-size: 11px;\">{}</h4>",
             esc(i18n.role_strengths_title())
         ));
         for (title, desc) in i18n.role_strengths(role_key) {
             html.push_str(&format!(
-                "<div style=\"padding: 3px 0; border-bottom: 1px solid #eee;\"><span style=\"font-size: 11px; color: #333; font-weight: 600;\">{}</span> <span style=\"font-size: 9px; color: #888;\">— {}</span></div>",
+                "<div style=\"padding: 2px 0; border-bottom: 1px solid #eee;\"><span style=\"font-size: 9px; color: #333; font-weight: 600;\">{}</span> <span style=\"font-size: 8px; color: #888;\">— {}</span></div>",
                 esc(title), esc(desc)
             ));
         }
@@ -113,14 +113,14 @@ fn build_pdf_html(s: &AppState, i18n: &dyn UiI18n) -> String {
     }
 
     if mc.contains(&"mc_achievements") {
-        html.push_str("<div style=\"margin-bottom: 12px; border-left: 3px solid #e83e8c; padding: 8px 12px; background: #fafbfc; border-radius: 0 6px 6px 0;\">");
+        html.push_str("<div style=\"margin-bottom: 10px; border-left: 3px solid #e83e8c; padding: 6px 10px; background: #fafbfc; border-radius: 0 6px 6px 0;\">");
         html.push_str(&format!(
-            "<h4 style=\"margin: 0 0 6px; color: #e83e8c; font-size: 13px;\">{}</h4>",
+            "<h4 style=\"margin: 0 0 4px; color: #e83e8c; font-size: 11px;\">{}</h4>",
             esc(i18n.role_achievements_title())
         ));
         for (title, desc) in i18n.role_achievements() {
             html.push_str(&format!(
-                "<div style=\"padding: 3px 0; border-bottom: 1px solid #eee;\"><span style=\"font-size: 11px; color: #333; font-weight: 600;\">{}</span> <span style=\"font-size: 9px; color: #888;\">— {}</span></div>",
+                "<div style=\"padding: 2px 0; border-bottom: 1px solid #eee;\"><span style=\"font-size: 9px; color: #333; font-weight: 600;\">{}</span> <span style=\"font-size: 8px; color: #888;\">— {}</span></div>",
                 esc(title), esc(desc)
             ));
         }
@@ -140,9 +140,9 @@ fn build_pdf_html(s: &AppState, i18n: &dyn UiI18n) -> String {
         build_keyed_section(&mut html, i18n, i18n.section_certificates(), &sorted_certs, "#6f42c1");
     }
     if mc.contains(&"mc_digital_skills") {
-        html.push_str("<div style=\"margin-bottom: 12px; border-left: 3px solid #17a2b8; padding: 8px 12px; background: #fafbfc; border-radius: 0 6px 6px 0;\">");
+        html.push_str("<div style=\"margin-bottom: 10px; border-left: 3px solid #17a2b8; padding: 6px 10px; background: #fafbfc; border-radius: 0 6px 6px 0;\">");
         html.push_str(&format!(
-            "<h4 style=\"margin: 0 0 6px; color: #17a2b8; font-size: 13px;\">{}</h4>",
+            "<h4 style=\"margin: 0 0 4px; color: #17a2b8; font-size: 11px;\">{}</h4>",
             esc(i18n.digital_skills_title())
         ));
         for line in i18n.digital_skills_text().split('\n') {
@@ -150,7 +150,7 @@ fn build_pdf_html(s: &AppState, i18n: &dyn UiI18n) -> String {
                 html.push_str("<br>");
             } else {
                 html.push_str(&format!(
-                    "<p style=\"margin: 0 0 3px; font-size: 10px; color: #555; line-height: 1.4;\">{}</p>",
+                    "<p style=\"margin: 0 0 2px; font-size: 8px; color: #555; line-height: 1.3;\">{}</p>",
                     esc(line)
                 ));
             }
@@ -172,6 +172,9 @@ fn build_pdf_html(s: &AppState, i18n: &dyn UiI18n) -> String {
         build_project_experience_section(&mut html, i18n, &cm, &jr, &pj, &sk, &tl);
     }
 
+    // ── End 3-column layout ──
+    html.push_str("</div>");
+
     html.push_str("</div>");
     html
 }
@@ -186,11 +189,11 @@ fn esc(s: &str) -> String {
 /// Build a keyed section (all items from a static key list) for the PDF.
 fn build_keyed_section(html: &mut String, i18n: &dyn UiI18n, title: &str, keys: &[&str], color: &str) {
     html.push_str(&format!(
-        "<div style=\"margin-bottom: 12px; border-left: 3px solid {}; padding: 8px 12px; background: #fafbfc; border-radius: 0 6px 6px 0;\">",
+        "<div style=\"margin-bottom: 10px; border-left: 3px solid {}; padding: 6px 10px; background: #fafbfc; border-radius: 0 6px 6px 0;\">",
         color
     ));
     html.push_str(&format!(
-        "<h4 style=\"margin: 0 0 6px; color: {}; font-size: 13px;\">{}</h4>",
+        "<h4 style=\"margin: 0 0 4px; color: {}; font-size: 11px;\">{}</h4>",
         color,
         esc(title)
     ));
@@ -198,12 +201,12 @@ fn build_keyed_section(html: &mut String, i18n: &dyn UiI18n, title: &str, keys: 
         let label = esc(i18n.item_label(key));
         let hint = i18n.item_hint(key);
         html.push_str(&format!(
-            "<div style=\"padding: 3px 0; border-bottom: 1px solid #eee;\"><span style=\"font-size: 11px; color: #333; font-weight: 600;\">{}</span>",
+            "<div style=\"padding: 2px 0; border-bottom: 1px solid #eee;\"><span style=\"font-size: 9px; color: #333; font-weight: 600;\">{}</span>",
             label
         ));
         if !hint.is_empty() {
             html.push_str(&format!(
-                " <span style=\"font-size: 9px; color: #888;\">— {}</span>",
+                " <span style=\"font-size: 8px; color: #888;\">— {}</span>",
                 esc(hint)
             ));
         }
@@ -273,9 +276,8 @@ fn build_project_experience_section(
         }
 
         if !has_any {
-            html.push_str("<hr style=\"border: none; border-top: 1px solid #ddd; margin: 14px 0;\">");
             html.push_str(&format!(
-                "<h3 style=\"margin: 0 0 10px; color: #333; font-size: 15px; border-bottom: 2px solid #667eea; padding-bottom: 4px;\">{}</h3>",
+                "<div style=\"margin-bottom: 6px;\"><h3 style=\"margin: 0 0 8px; color: #333; font-size: 12px; border-bottom: 2px solid #667eea; padding-bottom: 3px;\">{}</h3></div>",
                 esc(i18n.section_project_experience())
             ));
             has_any = true;
@@ -283,7 +285,7 @@ fn build_project_experience_section(
 
         // Company header
         html.push_str(&format!(
-            "<div style=\"margin-bottom: 10px; background: #f8f9fa; border-radius: 6px; padding: 10px 12px; border: 1px solid #e9ecef;\"><h4 style=\"margin: 0 0 8px; color: #667eea; font-size: 12px; font-weight: 700;\">{}</h4>",
+            "<div style=\"margin-bottom: 8px; background: #f8f9fa; border-radius: 6px; padding: 6px 8px; border: 1px solid #e9ecef;\"><h4 style=\"margin: 0 0 4px; color: #667eea; font-size: 10px; font-weight: 700;\">{}</h4>",
             esc(i18n.item_label(company_key))
         ));
 
@@ -293,26 +295,26 @@ fn build_project_experience_section(
             let sk: Vec<String> = e.skill_keys.iter().map(|k| esc(i18n.item_label(k))).collect();
             let tl: Vec<String> = e.tool_keys.iter().map(|k| esc(i18n.item_label(k))).collect();
 
-            html.push_str("<div style=\"padding: 5px 0; border-bottom: 1px solid #eee;\">");
+            html.push_str("<div style=\"padding: 3px 0; border-bottom: 1px solid #eee;\">");
             html.push_str(&format!(
-                "<div style=\"display: flex; gap: 6px; align-items: baseline;\"><span style=\"font-size: 9px; color: #764ba2; font-weight: 600; min-width: 110px;\">{}</span><span style=\"font-size: 10px; color: #333; font-weight: 600;\">{}</span></div>",
+                "<div style=\"display: flex; gap: 4px; align-items: baseline;\"><span style=\"font-size: 8px; color: #764ba2; font-weight: 600; min-width: 90px;\">{}</span><span style=\"font-size: 9px; color: #333; font-weight: 600;\">{}</span></div>",
                 esc(e.date_interval), project_label
             ));
 
             if !roles.is_empty() {
                 html.push_str(&format!(
-                    "<div style=\"margin-top: 1px;\"><span style=\"font-size: 8px; color: #888;\">👤 </span><span style=\"font-size: 9px; color: #555;\">{}</span></div>",
+                    "<div style=\"margin-top: 1px;\"><span style=\"font-size: 7px; color: #888;\">👤 </span><span style=\"font-size: 8px; color: #555;\">{}</span></div>",
                     roles.join(", ")
                 ));
             }
             if !sk.is_empty() {
                 html.push_str(&format!(
-                    "<div style=\"margin-top: 1px;\"><span style=\"font-size: 8px; color: #888;\">⚙ </span><span style=\"font-size: 9px; color: #555;\">{}</span></div>",
+                    "<div style=\"margin-top: 1px;\"><span style=\"font-size: 7px; color: #888;\">⚙ </span><span style=\"font-size: 8px; color: #555;\">{}</span></div>",
                     sk.join(", ")
                 ));
             }
             html.push_str(&format!(
-                "<div style=\"margin-top: 1px;\"><span style=\"font-size: 8px; color: #888;\">🔧 </span><span style=\"font-size: 9px; color: #555;\">{}</span></div>",
+                "<div style=\"margin-top: 1px;\"><span style=\"font-size: 7px; color: #888;\">🔧 </span><span style=\"font-size: 8px; color: #555;\">{}</span></div>",
                 tl.join(", ")
             ));
 
