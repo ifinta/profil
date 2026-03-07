@@ -442,4 +442,7 @@ impl UiI18n for HungarianUi {
             _ => &[],
         }
     }
+    fn pwa_hint(&self) -> &'static str {
+        "Ez egy PWA App, a böngésződből menteni tudod mobilon App-ként a főképernyőre mintha natív App lenne"
+    }
 }

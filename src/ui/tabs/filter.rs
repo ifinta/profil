@@ -1,9 +1,45 @@
 use dioxus::prelude::*;
+use qrcode::QrCode;
+use qrcode::render::svg;
 use crate::ui::state::{
     AppState, SKILL_KEYS, COMPANY_KEYS,
     JOB_ROLE_KEYS, PROJECT_KEYS, MAIN_CHARS_KEYS, TOOL_KEYS,
 };
 use crate::ui::i18n::UiI18n;
+
+const APP_URL: &str = "https://ifinta.github.io/profil/";
+
+fn render_qr_section(i18n: &dyn UiI18n) -> Element {
+    let qr = QrCode::new(APP_URL.as_bytes()).unwrap();
+    let svg_string = qr.render::<svg::Color>()
+        .min_dimensions(180, 180)
+        .max_dimensions(220, 220)
+        .quiet_zone(true)
+        .build();
+    let hint = i18n.pwa_hint().to_string();
+
+    rsx! {
+        div { style: "margin-bottom: 18px; background: #f8f9fa; border-radius: 10px; padding: 18px; border: 1px solid #e9ecef; text-align: center;",
+            // QR code
+            div { style: "display: inline-block; background: white; padding: 10px; border-radius: 8px; margin-bottom: 12px;",
+                div { dangerous_inner_html: "{svg_string}" }
+            }
+            // Clickable link
+            div { style: "margin-bottom: 14px;",
+                a {
+                    href: "{APP_URL}",
+                    target: "_blank",
+                    style: "color: #667eea; font-size: 0.95em; font-weight: 600; text-decoration: underline;",
+                    "{APP_URL}"
+                }
+            }
+            // PWA install hint
+            p { style: "margin: 0; color: #888; font-size: 0.82em; line-height: 1.5; font-style: italic;",
+                "{hint}"
+            }
+        }
+    }
+}
 
 pub fn render_filter_tab(s: AppState, i18n: &dyn UiI18n) -> Element {
     // Companies: reversed (newest first)
@@ -27,6 +63,9 @@ pub fn render_filter_tab(s: AppState, i18n: &dyn UiI18n) -> Element {
     tools_display.sort_by_key(|k| i18n.item_label(k));
 
     rsx! {
+        // QR code, link, and PWA install hint
+        {render_qr_section(i18n)}
+
         // "Főbb jellemzőim" (My Main Characteristics) group
         {render_section(s, i18n, i18n.section_main_chars(), MAIN_CHARS_KEYS, MAIN_CHARS_KEYS.to_vec(), SectionKind::MainChars)}
 

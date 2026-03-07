@@ -68,6 +68,9 @@ pub trait UiI18n {
     fn role_target_text(&self, key: &str) -> &'static str;
     fn role_strengths_title(&self) -> &'static str;
     fn role_strengths(&self, key: &str) -> &'static [(&'static str, &'static str)];
+
+    // PWA install hint
+    fn pwa_hint(&self) -> &'static str;
 }
 
 /// Factory function

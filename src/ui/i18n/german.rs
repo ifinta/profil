@@ -441,4 +441,7 @@ impl UiI18n for GermanUi {
             _ => &[],
         }
     }
+    fn pwa_hint(&self) -> &'static str {
+        "Dies ist eine PWA-App \u{2013} Sie können sie über Ihren Browser als App auf dem Startbildschirm speichern, als wäre es eine native App"
+    }
 }

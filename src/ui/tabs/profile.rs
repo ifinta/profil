@@ -3,7 +3,7 @@ use crate::i18n::Language;
 use crate::ui::state::{AppState, Role};
 use crate::ui::i18n::UiI18n;
 
-pub fn render_profile_tab(s: AppState, i18n: &dyn UiI18n) -> Element {
+pub fn render_profile_tab(mut s: AppState, i18n: &dyn UiI18n) -> Element {
     let lang = *s.language.read();
     let lang_value = match lang {
         Language::English => "en",
@@ -46,6 +46,25 @@ pub fn render_profile_tab(s: AppState, i18n: &dyn UiI18n) -> Element {
                     let r = Role::from_key(&evt.value());
                     let mut selected_role = s.selected_role;
                     selected_role.set(r);
+
+                    // Clear all checkbox selections
+                    s.selected_skills.set(Vec::new());
+                    s.selected_companies.set(Vec::new());
+                    s.selected_job_roles.set(Vec::new());
+                    s.selected_projects.set(Vec::new());
+                    s.selected_main_chars.set(Vec::new());
+                    s.selected_tools.set(Vec::new());
+
+                    // Auto-select company based on role
+                    let company = match r {
+                        Role::SoftwareEngineer => "vilati",
+                        Role::ProjectOwner => "bitnok",
+                        Role::TestManager => "bosch",
+                    };
+                    s.selected_companies.set(vec![company]);
+
+                    // Auto-select main characteristics: strengths + languages
+                    s.selected_main_chars.set(vec!["mc_strengths", "mc_languages"]);
                 },
                 option { value: "szm", selected: role == Role::SoftwareEngineer,
                     "{i18n.role_label(\"szm\")}"

@@ -445,4 +445,7 @@ impl UiI18n for EnglishUi {
             _ => &[],
         }
     }
+    fn pwa_hint(&self) -> &'static str {
+        "This is a PWA App — you can save it from your browser to your phone\u{2019}s home screen as if it were a native app"
+    }
 }
