@@ -20,5 +20,4 @@ Usage: First tab: base data. Please select in the second tab, what should be lis
 
 ## Related Repositories
 
-- [the PWA App](https://profil.vercel.app/ifinta) — A running version of this App
-- [github](https://github.com/ifinta/profil) — The github repo of this PWA App
+- [the PWA App](https://ifinta.github.io/profil) — A running version of this App

@@ -9,6 +9,11 @@ pub fn render_profile_tab(mut s: AppState, i18n: &dyn UiI18n) -> Element {
         Language::English => "en",
         Language::Hungarian => "hu",
         Language::German => "de",
+        Language::French => "fr",
+        Language::Finnish => "fi",
+        Language::Spanish => "es",
+        Language::Greek => "el",
+        Language::Italian => "it",
     };
     let role = *s.selected_role.read();
     let role_key = role.key();
@@ -23,6 +28,11 @@ pub fn render_profile_tab(mut s: AppState, i18n: &dyn UiI18n) -> Element {
                     let lang = match evt.value().as_str() {
                         "hu" => Language::Hungarian,
                         "de" => Language::German,
+                        "fr" => Language::French,
+                        "fi" => Language::Finnish,
+                        "es" => Language::Spanish,
+                        "el" => Language::Greek,
+                        "it" => Language::Italian,
                         _ => Language::English,
                     };
                     let mut language = s.language;
@@ -31,14 +41,25 @@ pub fn render_profile_tab(mut s: AppState, i18n: &dyn UiI18n) -> Element {
                 option { value: "en", selected: lang == Language::English, "English" }
                 option { value: "hu", selected: lang == Language::Hungarian, "Magyar" }
                 option { value: "de", selected: lang == Language::German, "Deutsch" }
+                option { value: "fr", selected: lang == Language::French, "Français" }
+                option { value: "fi", selected: lang == Language::Finnish, "Suomi" }
+                option { value: "es", selected: lang == Language::Spanish, "Español" }
+                option { value: "el", selected: lang == Language::Greek, "Ελληνικά" }
+                option { value: "it", selected: lang == Language::Italian, "Italiano" }
+            }
+        }
+
+        div { style: "text-align: center;",
+            // Profile photo (round)
+            img {
+                src: "photo.png",
+                alt: "Istvan Finta",
+                style: "width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin: 0 auto 16px; display: block; box-shadow: 0 4px 15px rgba(102,126,234,0.4); border: 3px solid #667eea;",
             }
         }
 
         // Role selector
         div { style: "margin-bottom: 16px;",
-            label { style: "display: block; font-size: 0.85em; color: #888; margin-bottom: 4px; font-weight: 600;",
-                "{i18n.role_section_label()}"
-            }
             select {
                 style: "width: 100%; padding: 10px 14px; border: 2px solid #764ba2; border-radius: 8px; font-size: 1em; color: #333; background: white; cursor: pointer; font-weight: 600;",
                 value: "{role_key}",
@@ -56,12 +77,11 @@ pub fn render_profile_tab(mut s: AppState, i18n: &dyn UiI18n) -> Element {
                     s.selected_tools.set(Vec::new());
 
                     // Auto-select company based on role
-                    let company = match r {
-                        Role::SoftwareEngineer => "vilati",
-                        Role::ProjectOwner => "bitnok",
-                        Role::TestManager => "bosch",
+                    match r {
+                        Role::SoftwareEngineer => s.selected_companies.set(vec!["vilati", "porsche"]),
+                        Role::ProjectOwner => s.selected_companies.set(vec!["bitnok"]),
+                        Role::TestManager => s.selected_companies.set(vec!["bosch"]),
                     };
-                    s.selected_companies.set(vec![company]);
 
                     // Auto-select main characteristics: strengths + languages
                     s.selected_main_chars.set(vec!["mc_strengths", "mc_languages"]);
@@ -79,16 +99,6 @@ pub fn render_profile_tab(mut s: AppState, i18n: &dyn UiI18n) -> Element {
         }
 
         div { style: "text-align: center;",
-            // Profile photo (round)
-            img {
-                src: "photo.png",
-                alt: "Istvan Finta",
-                style: "width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin: 0 auto 16px; display: block; box-shadow: 0 4px 15px rgba(102,126,234,0.4); border: 3px solid #667eea;",
-            }
-
-            p { style: "margin: 0 0 4px; color: #667eea; font-weight: 600; font-size: 1.05em;",
-                "{i18n.role_title(role_key)}"
-            }
             p { style: "margin: 0 0 20px; color: #888; font-size: 0.9em;",
                 "{i18n.profile_location()}"
             }

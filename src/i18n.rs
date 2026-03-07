@@ -6,4 +6,9 @@ pub enum Language {
     #[default]
     Hungarian,
     German,
+    French,
+    Finnish,
+    Spanish,
+    Greek,
+    Italian,
 }

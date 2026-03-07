@@ -277,7 +277,10 @@ pub struct AppState {
 }
 
 pub fn use_app_state() -> AppState {
-    // Try to restore from localStorage; fall back to defaults.
+    // Try to restore from localStorage; fall back to "Szoftvermérnök" defaults.
+    let persisted = load_persisted();
+    let is_first_start = persisted.is_none();
+
     let state = AppState {
         language: use_signal(|| {
             load_persisted().map(|p| p.language).unwrap_or_default()
@@ -286,17 +289,21 @@ pub fn use_app_state() -> AppState {
             load_persisted().map(|p| p.active_tab).unwrap_or_default()
         }),
         selected_role: use_signal(|| {
-            load_persisted().map(|p| p.selected_role).unwrap_or_default()
+            load_persisted().map(|p| p.selected_role).unwrap_or(Role::SoftwareEngineer)
         }),
         selected_skills: use_signal(|| {
             load_persisted()
                 .map(|p| resolve_keys(&p.selected_skills, SKILL_KEYS))
                 .unwrap_or_default()
         }),
-        selected_companies: use_signal(|| {
-            load_persisted()
-                .map(|p| resolve_keys(&p.selected_companies, COMPANY_KEYS))
-                .unwrap_or_default()
+        selected_companies: use_signal(move || {
+            if is_first_start {
+                vec!["vilati", "porsche"]
+            } else {
+                load_persisted()
+                    .map(|p| resolve_keys(&p.selected_companies, COMPANY_KEYS))
+                    .unwrap_or_default()
+            }
         }),
         selected_job_roles: use_signal(|| {
             load_persisted()
@@ -308,10 +315,14 @@ pub fn use_app_state() -> AppState {
                 .map(|p| resolve_keys(&p.selected_projects, PROJECT_KEYS))
                 .unwrap_or_default()
         }),
-        selected_main_chars: use_signal(|| {
-            load_persisted()
-                .map(|p| resolve_keys(&p.selected_main_chars, MAIN_CHARS_KEYS))
-                .unwrap_or_default()
+        selected_main_chars: use_signal(move || {
+            if is_first_start {
+                vec!["mc_strengths", "mc_languages"]
+            } else {
+                load_persisted()
+                    .map(|p| resolve_keys(&p.selected_main_chars, MAIN_CHARS_KEYS))
+                    .unwrap_or_default()
+            }
         }),
         selected_tools: use_signal(|| {
             load_persisted()

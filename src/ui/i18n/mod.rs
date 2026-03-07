@@ -1,11 +1,21 @@
 mod english;
+mod finnish;
+mod french;
 mod german;
+mod greek;
 mod hungarian;
+mod italian;
+mod spanish;
 
 use crate::i18n::Language;
 use english::EnglishUi;
+use finnish::FinnishUi;
+use french::FrenchUi;
 use german::GermanUi;
+use greek::GreekUi;
 use hungarian::HungarianUi;
+use italian::ItalianUi;
+use spanish::SpanishUi;
 
 /// Trait for UI internationalized strings
 pub trait UiI18n {
@@ -79,5 +89,10 @@ pub fn ui_i18n(lang: Language) -> Box<dyn UiI18n> {
         Language::English => Box::new(EnglishUi),
         Language::German => Box::new(GermanUi),
         Language::Hungarian => Box::new(HungarianUi),
+        Language::French => Box::new(FrenchUi),
+        Language::Finnish => Box::new(FinnishUi),
+        Language::Spanish => Box::new(SpanishUi),
+        Language::Greek => Box::new(GreekUi),
+        Language::Italian => Box::new(ItalianUi),
     }
 }
