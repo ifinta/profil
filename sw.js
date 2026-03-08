@@ -1,5 +1,5 @@
 // Cache version — updated automatically by build.sh on every deploy.
-// Format: profil-v0.YYYYMMDD.HHmm-COMMITHASH (date+time+git hash)
+// Format: profil-v0.YYYYMMDD.HHmm- (date+time ensures it always increases)
 const CACHE_NAME = 'profil-v0.1000-';
 
 // We don't use a pre-cache list because Dioxus generates hashed filenames
@@ -8,6 +8,7 @@ const CACHE_NAME = 'profil-v0.1000-';
 self.addEventListener('message', event => {
     if (event.data && event.data.type === 'GET_VERSION') {
         event.ports[0].postMessage({ version: CACHE_NAME });
+        LOG('Replied with version:', CACHE_NAME);
     }
 });
 
