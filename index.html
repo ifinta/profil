@@ -84,7 +84,6 @@
         }
 
         function tick() {
-            console.log("[App] tick");
             if ('serviceWorker' in navigator) {
                 console.log('[App] update check requested');
                 navigator.serviceWorker.ready.then(reg => reg.update());
