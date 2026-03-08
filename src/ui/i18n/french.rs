@@ -371,7 +371,7 @@ impl UiI18n for FrenchUi {
     fn role_section_label(&self) -> &'static str { "Rôle" }
     fn role_label(&self, key: &str) -> &'static str {
         match key {
-            "po" => "Product Owner",
+            "po" => "Responsable produit",
             "szm" => "Ingénieur logiciel",
             "tm" => "Responsable de tests",
             _ => "",
@@ -379,7 +379,7 @@ impl UiI18n for FrenchUi {
     }
     fn role_title(&self, key: &str) -> &'static str {
         match key {
-            "po" => "Product Owner",
+            "po" => "Responsable produit",
             "szm" => "Ingénieur logiciel",
             "tm" => "Responsable de tests",
             _ => "Ingénieur logiciel",

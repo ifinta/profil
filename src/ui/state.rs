@@ -215,6 +215,52 @@ pub const PROJECT_EXPERIENCE: &[ProjectEntry] = &[
         tool_keys: &[] },
 ];
 
+/// Given selected companies, return the set of project/job-role/skill/tool keys
+/// that are reachable from those companies via PROJECT_EXPERIENCE.
+/// When no companies are selected, everything is available (no restriction).
+pub struct AvailableKeys {
+    pub projects: Vec<&'static str>,
+    pub job_roles: Vec<&'static str>,
+    pub skills: Vec<&'static str>,
+    pub tools: Vec<&'static str>,
+}
+
+pub fn available_keys_for_companies(selected_companies: &[&str]) -> AvailableKeys {
+    if selected_companies.is_empty() {
+        return AvailableKeys {
+            projects: PROJECT_KEYS.to_vec(),
+            job_roles: JOB_ROLE_KEYS.to_vec(),
+            skills: SKILL_KEYS.to_vec(),
+            tools: TOOL_KEYS.to_vec(),
+        };
+    }
+
+    let mut projects = Vec::new();
+    let mut job_roles = Vec::new();
+    let mut skills = Vec::new();
+    let mut tools = Vec::new();
+
+    for entry in PROJECT_EXPERIENCE {
+        if !selected_companies.contains(&entry.company_key) {
+            continue;
+        }
+        if !projects.contains(&entry.project_key) {
+            projects.push(entry.project_key);
+        }
+        for &jr in entry.job_role_keys {
+            if !job_roles.contains(&jr) { job_roles.push(jr); }
+        }
+        for &sk in entry.skill_keys {
+            if !skills.contains(&sk) { skills.push(sk); }
+        }
+        for &tl in entry.tool_keys {
+            if !tools.contains(&tl) { tools.push(tl); }
+        }
+    }
+
+    AvailableKeys { projects, job_roles, skills, tools }
+}
+
 const STORAGE_KEY: &str = "profil_app_state";
 
 /// Serializable snapshot of the entire app state for localStorage.

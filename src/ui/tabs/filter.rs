@@ -4,6 +4,7 @@ use qrcode::render::svg;
 use crate::ui::state::{
     AppState, SKILL_KEYS, COMPANY_KEYS,
     JOB_ROLE_KEYS, PROJECT_KEYS, MAIN_CHARS_KEYS, TOOL_KEYS,
+    available_keys_for_companies,
 };
 use crate::ui::i18n::UiI18n;
 
@@ -42,6 +43,11 @@ fn render_qr_section(i18n: &dyn UiI18n) -> Element {
 }
 
 pub fn render_filter_tab(s: AppState, i18n: &dyn UiI18n) -> Element {
+    // Compute which items are reachable from the selected companies
+    let selected_companies = s.selected_companies.read();
+    let available = available_keys_for_companies(&selected_companies);
+    drop(selected_companies);
+
     // Companies: reversed (newest first)
     let mut companies_display: Vec<&'static str> = COMPANY_KEYS.to_vec();
     companies_display.reverse();
@@ -66,23 +72,23 @@ pub fn render_filter_tab(s: AppState, i18n: &dyn UiI18n) -> Element {
         // QR code, link, and PWA install hint
         {render_qr_section(i18n)}
 
-        // "Főbb jellemzőim" (My Main Characteristics) group
-        {render_section(s, i18n, i18n.section_main_chars(), MAIN_CHARS_KEYS, MAIN_CHARS_KEYS.to_vec(), SectionKind::MainChars)}
+        // "Főbb jellemzőim" (My Main Characteristics) group — not company-dependent
+        {render_section(s, i18n, i18n.section_main_chars(), MAIN_CHARS_KEYS, MAIN_CHARS_KEYS.to_vec(), SectionKind::MainChars, None)}
 
-        // Companies (reversed)
-        {render_section(s, i18n, i18n.section_companies(), COMPANY_KEYS, companies_display, SectionKind::Companies)}
+        // Companies (reversed) — never restricted
+        {render_section(s, i18n, i18n.section_companies(), COMPANY_KEYS, companies_display, SectionKind::Companies, None)}
 
-        // Job Roles (alphabetical)
-        {render_section(s, i18n, i18n.section_job_roles(), JOB_ROLE_KEYS, job_roles_display, SectionKind::JobRoles)}
+        // Job Roles (alphabetical) — restricted by selected companies
+        {render_section(s, i18n, i18n.section_job_roles(), JOB_ROLE_KEYS, job_roles_display, SectionKind::JobRoles, Some(&available.job_roles))}
 
-        // Projects (reversed)
-        {render_section(s, i18n, i18n.section_projects(), PROJECT_KEYS, projects_display, SectionKind::Projects)}
+        // Projects (reversed) — restricted by selected companies
+        {render_section(s, i18n, i18n.section_projects(), PROJECT_KEYS, projects_display, SectionKind::Projects, Some(&available.projects))}
 
-        // Technical Skills (alphabetical)
-        {render_section(s, i18n, i18n.section_skills(), SKILL_KEYS, skills_display, SectionKind::Skills)}
+        // Technical Skills (alphabetical) — restricted by selected companies
+        {render_section(s, i18n, i18n.section_skills(), SKILL_KEYS, skills_display, SectionKind::Skills, Some(&available.skills))}
 
-        // Tools (alphabetical)
-        {render_section(s, i18n, i18n.section_tools(), TOOL_KEYS, tools_display, SectionKind::Tools)}
+        // Tools (alphabetical) — restricted by selected companies
+        {render_section(s, i18n, i18n.section_tools(), TOOL_KEYS, tools_display, SectionKind::Tools, Some(&available.tools))}
     }
 }
 
@@ -114,6 +120,7 @@ fn render_section(
     all_keys: &'static [&'static str],
     display_keys: Vec<&'static str>,
     kind: SectionKind,
+    available_keys: Option<&Vec<&'static str>>,
 ) -> Element {
     let signal = get_signal(s, kind);
     let selected = signal.read();
@@ -122,6 +129,17 @@ fn render_section(
     let title = section_title.to_string();
     let select_all_label = i18n.filter_select_all().to_string();
     let clear_all_label = i18n.filter_clear_all().to_string();
+
+    // Pre-compute availability for each key so we can pass owned data into rsx
+    let items_with_availability: Vec<(&'static str, bool)> = display_keys
+        .iter()
+        .map(|&key| {
+            let is_available = available_keys
+                .map(|avail| avail.contains(&key))
+                .unwrap_or(true);
+            (key, is_available)
+        })
+        .collect();
 
     rsx! {
         div { style: "margin-bottom: 18px; background: #f8f9fa; border-radius: 10px; padding: 14px; border: 1px solid #e9ecef;",
@@ -143,8 +161,8 @@ fn render_section(
             }
 
             // Checkboxes in display order
-            for key in display_keys.iter() {
-                {render_checkbox_item(s, i18n, key, kind)}
+            for (key, is_available) in items_with_availability.iter() {
+                {render_checkbox_item(s, i18n, key, kind, *is_available)}
             }
         }
     }
@@ -155,19 +173,28 @@ fn render_checkbox_item(
     i18n: &dyn UiI18n,
     key: &'static str,
     kind: SectionKind,
+    is_available: bool,
 ) -> Element {
     let signal = get_signal(s, kind);
     let is_checked = signal.read().contains(&key);
     let label = i18n.item_label(key).to_string();
     let hint = i18n.item_hint(key).to_string();
 
+    let label_style = if is_available {
+        "display: flex; align-items: flex-start; gap: 8px; padding: 6px 0; cursor: pointer;"
+    } else {
+        "display: flex; align-items: flex-start; gap: 8px; padding: 6px 0; cursor: default; opacity: 0.4;"
+    };
+
     rsx! {
-        label { style: "display: flex; align-items: flex-start; gap: 8px; padding: 6px 0; cursor: pointer;",
+        label { style: "{label_style}",
             input {
                 r#type: "checkbox",
-                checked: is_checked,
+                checked: is_checked && is_available,
+                disabled: !is_available,
                 style: "margin-top: 3px; accent-color: #667eea;",
                 onchange: move |_| {
+                    if !is_available { return; }
                     let mut sig = signal;
                     let mut current = sig.read().clone();
                     if current.contains(&key) {

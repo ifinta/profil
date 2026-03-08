@@ -371,7 +371,7 @@ impl UiI18n for GreekUi {
     fn role_section_label(&self) -> &'static str { "Ρόλος" }
     fn role_label(&self, key: &str) -> &'static str {
         match key {
-            "po" => "Product Owner",
+            "po" => "Υπεύθυνος Προϊόντος",
             "szm" => "Μηχανικός Λογισμικού",
             "tm" => "Υπεύθυνος Δοκιμών",
             _ => "",
@@ -379,7 +379,7 @@ impl UiI18n for GreekUi {
     }
     fn role_title(&self, key: &str) -> &'static str {
         match key {
-            "po" => "Product Owner",
+            "po" => "Υπεύθυνος Προϊόντος",
             "szm" => "Μηχανικός Λογισμικού",
             "tm" => "Υπεύθυνος Δοκιμών",
             _ => "Μηχανικός Λογισμικού",
