@@ -24,9 +24,12 @@ SW_FILE="sw.js"
 echo "CACHE_NAME → ${CACHE_NAME}"
 $DRY && exit 0
 
-# ── 2. Stamp CACHE_NAME into sw.js ───────────────────────────────────────────
+# ── 2. Stamp CACHE_NAME into sw.js and index.html ────────────────────────────
 sed -i "s|^const CACHE_NAME = '.*';|const CACHE_NAME = '${CACHE_NAME}';|" "${SW_FILE}"
 echo "Stamped ${SW_FILE}"
+
+sed -i "s|window.__APP_VERSION = '.*'|window.__APP_VERSION = '${CACHE_NAME}'|" "index.html"
+echo "Stamped index.html"
 
 # ── 3. Build ──────────────────────────────────────────────────────────────────
 echo "Running: dx build --release"

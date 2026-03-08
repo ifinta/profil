@@ -36,7 +36,7 @@ self.addEventListener('activate', event => {
             // that is NOT an update and must not trigger a reload loop.
             if (isUpdate) {
                 return self.clients.matchAll({ type: 'window' }).then(clients => {
-                    clients.forEach(c => c.postMessage({ type: '__IFINTA_SW_UPDATED' }));
+                    clients.forEach(c => c.postMessage({ type: '__IFINTA_SW_UPDATED', version: CACHE_NAME }));
                 });
             }
         })
