@@ -77,6 +77,20 @@
                 // Kick off an update check every time the page loads
                 reg.update();
             });
+
+            // Query the SW for its CACHE_NAME and expose it to the app
+            navigator.serviceWorker.ready.then(function() {
+                if (!navigator.serviceWorker.controller) return;
+                var ch = new MessageChannel();
+                ch.port1.onmessage = function(e) {
+                    if (e.data && e.data.version) {
+                        window.__PROFIL_SW_VERSION = e.data.version;
+                    }
+                };
+                navigator.serviceWorker.controller.postMessage(
+                    { type: 'GET_VERSION' }, [ch.port2]
+                );
+            });
         }
     </script>
 </body>

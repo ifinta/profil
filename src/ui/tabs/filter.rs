@@ -10,6 +10,36 @@ use crate::ui::i18n::UiI18n;
 
 const APP_URL: &str = "https://ifinta.github.io/profil/";
 
+fn render_version_label() -> Element {
+    let mut version = use_signal(|| String::new());
+
+    use_effect(move || {
+        spawn(async move {
+            let result = dioxus::document::eval(
+                "window.__PROFIL_SW_VERSION || ''"
+            ).await;
+            if let Ok(v) = result {
+                if let Some(s) = v.as_str() {
+                    if !s.is_empty() {
+                        version.set(s.to_string());
+                    }
+                }
+            }
+        });
+    });
+
+    let v = version.read();
+    if v.is_empty() {
+        return rsx! {};
+    }
+
+    rsx! {
+        div { style: "text-align: right; margin-bottom: 4px;",
+            span { style: "font-size: 0.7em; color: #aaa;", "{v}" }
+        }
+    }
+}
+
 fn render_qr_section(i18n: &dyn UiI18n) -> Element {
     let qr = QrCode::new(APP_URL.as_bytes()).unwrap();
     let svg_string = qr.render::<svg::Color>()
@@ -69,6 +99,9 @@ pub fn render_filter_tab(s: AppState, i18n: &dyn UiI18n) -> Element {
     tools_display.sort_by_key(|k| i18n.item_label(k));
 
     rsx! {
+        // SW version label
+        {render_version_label()}
+
         // QR code, link, and PWA install hint
         {render_qr_section(i18n)}
 

@@ -79,7 +79,13 @@ pub fn render_profile_tab(mut s: AppState, i18n: &dyn UiI18n) -> Element {
                     // Auto-select company based on role
                     match r {
                         Role::SoftwareEngineer => s.selected_companies.set(vec!["vilati", "porsche"]),
-                        Role::ProjectOwner => s.selected_companies.set(vec!["bitnok"]),
+                        Role::ProjectOwner => {
+                            s.selected_companies.set(vec!["bitnok", "bosch", "vilati", "teamcom"]);
+                            s.selected_projects.set(vec![
+                                "pj_test_net", "pj_test_designer",
+                                "pj_ocit", "pj_debrecen", "pj_authors_dream",
+                            ]);
+                        },
                         Role::TestManager => s.selected_companies.set(vec!["bosch"]),
                     };
 
