@@ -13,28 +13,16 @@ const APP_URL: &str = "https://ifinta.github.io/profil/";
 fn render_version_label() -> Element {
     let mut version = use_signal(|| String::new());
 
-    // Query the SW version via JS — polls until the value arrives (max 10s)
     use_effect(move || {
         spawn(async move {
-            let result: Result<serde_json::Value, _> = dioxus::document::eval(
-                r#"
-                var tries = 0;
-                async function poll() {
-                    while (tries < 20) {
-                        if (window.__PROFIL_SW_VERSION) {
-                            return window.__PROFIL_SW_VERSION;
-                        }
-                        await new Promise(r => setTimeout(r, 500));
-                        tries++;
-                    }
-                    return "";
-                }
-                return await poll();
-                "#
+            let result = dioxus::document::eval(
+                "window.__PROFIL_SW_VERSION || ''"
             ).await;
-            if let Ok(serde_json::Value::String(s)) = result {
-                if !s.is_empty() {
-                    version.set(s);
+            if let Ok(v) = result {
+                if let Some(s) = v.as_str() {
+                    if !s.is_empty() {
+                        version.set(s.to_string());
+                    }
                 }
             }
         });
