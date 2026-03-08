@@ -27,7 +27,7 @@ $DRY && exit 0
 
 # ── 2. Stamp CACHE_NAME into sw.js ───────────────────────────────────────────
 sed -i "s|^const CACHE_NAME = '.*';|const CACHE_NAME = '${CACHE_NAME}';|" "${SW_FILE}"
-sed -i "s|.*CACHE_NAME.*|                \"12345\"|" "${FILTER_RS}"
+sed -i "s|.*CACHE_NAME.*|                \"${CACHE_NAME}\"|" "${FILTER_RS}"
 echo "Stamped ${SW_FILE} and ${FILTER_RS}"
 
 # ── 3. Build ──────────────────────────────────────────────────────────────────
