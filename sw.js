@@ -2,29 +2,44 @@
 // Format: profil-v0.YYYYMMDD.HHmm- (date+time ensures it always increases)
 const CACHE_NAME = 'profil-v0.1000-';
 
+// We don't use a pre-cache list because Dioxus generates hashed filenames
+// (e.g. <project>-dxhABC123.js) that change with every build.
+// Instead we cache at runtime: files are cached on first load.
+self.addEventListener('message', event => {
+    if (event.data && event.data.type === 'GET_VERSION') {
+        event.ports[0].postMessage({ version: CACHE_NAME });
+        LOG('Replied with version:', CACHE_NAME);
+    }
+});
+
 self.addEventListener('install', event => {
     // Activate immediately, don't wait for the old SW to stop
     self.skipWaiting();
 });
 
 self.addEventListener('activate', event => {
+    // 1. Claim clients IMMEDIATELY
+    event.waitUntil(self.clients.claim());
+
+    // 2. Then proceed with cleanup and notifications
+    // Delete old cache versions
     event.waitUntil(
         caches.keys().then(keys => {
-            const oldCaches = keys.filter(k => k !== CACHE_NAME);
-            const isUpdate = oldCaches.length > 0;
-
-            // 1. Claim control first
-            return self.clients.claim().then(() => {
-                // 2. Only delete old caches AFTER claiming control
-                return Promise.all(oldCaches.map(k => caches.delete(k)));
-            }).then(() => {
-                // 3. Notify the app to reload
-                if (isUpdate) {
-                    return self.clients.matchAll({ type: 'window' }).then(clients => {
-                        clients.forEach(c => c.postMessage({ type: '__IFINTA_SW_UPDATED' }));
-                    });
-                }
-            });
+            const old = keys.filter(k => k !== CACHE_NAME);
+            // Track whether this is a genuine update (old caches exist)
+            const isUpdate = old.length > 0;
+            return Promise.all(old.map(k => caches.delete(k))).then(() => isUpdate);
+        }).then(isUpdate => {
+            return self.clients.claim().then(() => isUpdate);
+        }).then(isUpdate => {
+            // Only notify clients to reload when we actually replaced an older version.
+            // On iOS the SW can be terminated and re-activated by the OS —
+            // that is NOT an update and must not trigger a reload loop.
+            if (isUpdate) {
+                return self.clients.matchAll({ type: 'window' }).then(clients => {
+                    clients.forEach(c => c.postMessage({ type: '__IFINTA_SW_UPDATED' }));
+                });
+            }
         })
     );
 });
@@ -65,7 +80,7 @@ self.addEventListener('fetch', event => {
     const isCacheableAsset =
         /\.(js|wasm|css|png|jpg|svg|ico|woff2?)$/.test(url.pathname) &&
         !url.pathname.endsWith('/sw.js') &&
-        !url.pathname.endsWith('/_bridge.js');
+        !url.pathname.endsWith('/log_bridge.js');
 
     if (isCacheableAsset) {
         event.respondWith(
