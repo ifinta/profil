@@ -1,5 +1,5 @@
-// Cache version (manual changes)
-const CACHE_NAME = 'profil-v0.95';
+// Cache version (build.sh change it)
+const CACHE_NAME = 'profil-<date-time>-<commit>';
 
 // We don't use a pre-cache list because Dioxus generates hashed filenames
 // (e.g. <project>-dxhABC123.js) that change with every build.

@@ -18,7 +18,7 @@ DRY=false
 # ── 1. Generate CACHE_NAME ────────────────────────────────────────────────────
 BUILD_TS="$(date +%Y%m%d.%H%M)"
 GIT_HASH="$(git rev-parse --short=8 HEAD)"
-CACHE_NAME="profil-v0.${BUILD_TS}-${GIT_HASH}"
+CACHE_NAME="profil-${BUILD_TS}-${GIT_HASH}"
 SW_FILE="sw.js"
 FILTER_RS="src/ui/tabs/filter.rs"
 
