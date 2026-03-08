@@ -366,7 +366,7 @@ impl UiI18n for HungarianUi {
     fn role_section_label(&self) -> &'static str { "Pozíció" }
     fn role_label(&self, key: &str) -> &'static str {
         match key {
-            "po" => "Product Owner",
+            "po" => "Termékgazda",
             "szm" => "Szoftvermérnök",
             "tm" => "Tesztmenedzser",
             _ => "",
@@ -374,7 +374,7 @@ impl UiI18n for HungarianUi {
     }
     fn role_title(&self, key: &str) -> &'static str {
         match key {
-            "po" => "Product Owner",
+            "po" => "Termékgazda",
             "szm" => "Szoftvermérnök",
             "tm" => "Tesztmenedzser",
             _ => "Szoftvermérnök",
