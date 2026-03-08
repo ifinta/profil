@@ -1,4 +1,4 @@
-// Cache version — build.sh change it
+// Cache version — build.sh replaces it with real values
 const CACHE_NAME = 'profil-<date.time>-<commit>';
 
 function _ts() {
