@@ -1,6 +1,5 @@
-// Cache version — updated automatically by build.sh on every deploy.
-// Format: profil-v0.YYYYMMDD.HHmm- (date+time ensures it always increases)
-const CACHE_NAME = 'profil-v0.1000-';
+// Cache version (manual changes)
+const CACHE_NAME = 'profil-v0.94';
 
 // We don't use a pre-cache list because Dioxus generates hashed filenames
 // (e.g. <project>-dxhABC123.js) that change with every build.
