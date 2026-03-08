@@ -12,7 +12,7 @@
     <!-- iOS PWA Support -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Zsozso">
+    <meta name="apple-mobile-web-app-title" content="Profil">
     <link rel="apple-touch-icon" href="icon-192.png">
 </head>
 <body>
@@ -44,9 +44,9 @@
 
             // 1. Listen for update signal from the SW
             navigator.serviceWorker.addEventListener('message', function(event) {
-                if (event.data?.type === '__IFINTA_SW_UPDATED') {
-                    window.__IFINTA_UPDATE_READY = true;
-                    window.dispatchEvent(new CustomEvent('zsozso_update_available'));
+                if (event.data?.type === '__PROFIL_SW_UPDATED') {
+                    window.__PROFIL_UPDATE_READY = true;
+                    window.dispatchEvent(new CustomEvent('profil_update_available'));
                     // On PWA homescreen the automatic reload can freeze,
                     // so show a manual Refresh button instead.
                     _showRefreshBanner();
@@ -65,8 +65,8 @@
             // 3. Register (not re-register) the SW.
             //    updateViaCache:'none' ensures the browser always fetches sw.js
             //    from the network, bypassing any HTTP cache or file lock.
-            navigator.serviceWorker.register('/app/sw.js', {
-                scope: '/app/',
+            navigator.serviceWorker.register('/profil/sw.js', {
+                scope: '/profil/',
                 updateViaCache: 'none'
             }).then(function(reg) {
                 console.log('[App] SW registered, scope:', reg.scope);
