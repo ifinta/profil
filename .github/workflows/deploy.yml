@@ -42,12 +42,9 @@ jobs:
         run: cargo install dioxus-cli --locked
 
       - name: Build
-        run: dx build --release
-
-      - name: Copy static assets
         run: |
-          OUT=target/dx/profil/release/web/public
-          cp photo.png icon-192.png icon-512.png icon.svg favicon.ico manifest.json sw.js "$OUT/"
+          chmod +x build.sh
+          ./build.sh
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
