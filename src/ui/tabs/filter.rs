@@ -21,6 +21,10 @@ fn render_qr_section(i18n: &dyn UiI18n) -> Element {
 
     rsx! {
         div { style: "margin-bottom: 18px; background: #f8f9fa; border-radius: 10px; padding: 18px; border: 1px solid #e9ecef; text-align: center;",
+            // static version string
+            p { style: "margin: 0; color: #888; font-size: 0.82em; line-height: 1.5;",
+                "Version: v0.9"
+            }
             // QR code
             div { style: "display: inline-block; background: white; padding: 10px; border-radius: 8px; margin-bottom: 12px;",
                 div { dangerous_inner_html: "{svg_string}" }
