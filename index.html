@@ -29,16 +29,19 @@
     <script>
         if ('serviceWorker' in navigator) {
             var _swRefreshing = false;
+            console.log('[App] serviceWorker in navigator');
 
             // Show the update banner with a manual Refresh button
             function _showRefreshBanner() {
                 var banner = document.getElementById('sw-update-banner');
                 if (banner) banner.style.display = 'block';
+                else console.log('[App] no sw-update-banner');
             }
 
             // Wire up the Refresh button
             document.getElementById('sw-refresh-btn').addEventListener('click', function() {
                 // Hard reload: bypass cache to pick up the new SW-served assets
+                console.log('[App] reload...');
                 window.location.reload();
             });
 
@@ -71,8 +74,10 @@
             }).then(function(reg) {
                 console.log('[App] SW registered, scope:', reg.scope);
                 // Kick off an update check every time the page loads
-                reg.update();
+                //reg.update();
             });
+        } else {
+            console.log('[App] serviceWorker not in navigator:');
         }
     </script>
 </body>
