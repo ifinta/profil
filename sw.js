@@ -76,9 +76,13 @@ self.addEventListener('fetch', event => {
                 .then(response => {
                     LOG('NAVIGATE network response:', response.status, url.pathname);
                     if (response.status === 200) {
-                        const clone = response.clone();
-                        caches.open(CACHE_NAME).then(c => c.put(event.request, clone));
-                        LOG('NAVIGATE cached fresh copy:', url.pathname);
+                        const url = new URL(event.request.url);
+                        // Only cache http/https to avoid extension errors
+                        if (url.protocol.startsWith('http')) {
+                            const clone = response.clone();
+                            caches.open(CACHE_NAME).then(c => c.put(event.request, clone));
+                            LOG('NAVIGATE cached fresh copy:', url.pathname);
+                        }
                     }
                     return response;
                 })
