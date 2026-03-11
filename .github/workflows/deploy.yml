@@ -43,15 +43,20 @@ jobs:
             curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
             cargo binstall dioxus-cli -y
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
       - name: Build
         run: |
           chmod +x build.sh
           ./build.sh
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
-          path: target/dx/profil/release/web/public
+          path: deploy/profil
 
       - name: Deploy to GitHub Pages
         id: deployment

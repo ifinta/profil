@@ -42,3 +42,8 @@ cp photo.png icon-192.png icon-512.png icon.svg favicon.ico manifest.json sw.js 
 echo ""
 echo "✓ Build complete — CACHE_NAME: ${CACHE_NAME}"
 echo "  Output: ${OUT}/"
+
+# ── 5. Bundle for offline PWA ─────────────────────────────────────────────────
+echo ""
+echo "Bundling for offline PWA deployment…"
+node bundle_sw.js -j -dioxus -logging "${OUT}" deploy profil
