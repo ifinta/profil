@@ -1,7 +1,7 @@
 // Change it! No other change in this file is a need.
 var APP_NAME = 'profil';
 // The build.sh replaces it with a real APP_VERSION string...
-var APP_VERSION = 'profil-20260313.1220-032d9f7a';
+var APP_VERSION = 'profil-20260313.1225-95b88cae';
 // Cache version — it is only changes, if a need.
 const CACHE_NAME = APP_VERSION+'-SW-v0.10';
 var __BASE_PREFIX = '/'+APP_NAME+'/';
