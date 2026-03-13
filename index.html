@@ -55,7 +55,7 @@
                         window.location.reload();
                     }
                     navigator.serviceWorker.addEventListener('controllerchange', doReload);
-                    navigator.serviceWorker.register('sw.js', { scope: '/sPWA/', updateViaCache: 'none' });
+                    navigator.serviceWorker.register('sw.js', { scope: '/profil/', updateViaCache: 'none' });
                     hardReload();
                 }
             }
@@ -92,7 +92,7 @@
 
             // Listen for update signal from the Service Worker
             navigator.serviceWorker.addEventListener('message', function(event) {
-                if (event.data?.type === '__ZSOZSO_SW_UPDATED') {
+                if (event.data?.type === '__PROFIL_SW_UPDATED') {
                     console.log('[App] update signal — showing Refresh banner');
                     _showRefreshBanner();
                 }
@@ -109,7 +109,7 @@
             // updateViaCache:'none' ensures the browser always fetches sw.js
             // from the network, bypassing any HTTP cache or file lock.
             navigator.serviceWorker.register('sw.js', {
-                scope: '/sPWA/',
+                scope: '/profil/',
                 updateViaCache: 'none'
             }).then(function(reg) {
                 console.log('[App] Service Worker registered, scope:', reg.scope);
