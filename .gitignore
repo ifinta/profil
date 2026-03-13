@@ -1,4 +1,4 @@
-/target
-/deploy
+target
+deploy
 *.rlib
 *.tgz
