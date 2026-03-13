@@ -1,10 +1,10 @@
-// Change it! No other change in this file is a need.
-var APP_NAME = 'profil';
+// Change this two rows! No other change in this file is a need.
+var MESSAGE_PREFIX = 'PROFIL';
+var __BASE_PREFIX = '/profil/';
 // The build.sh replaces it with a real APP_VERSION string...
-var APP_VERSION = 'profil-20260313.1253-29390a8d';
+var APP_VERSION = 'version';
 // Cache version — it is only changes, if a need.
-const CACHE_NAME = APP_VERSION+'-SW-v0.10';
-var __BASE_PREFIX = '/'+APP_NAME+'/';
+const CACHE_NAME = APP_VERSION+'-SW-v0.11';
 
 function _ts() {
     const d = new Date();
@@ -194,7 +194,7 @@ self.addEventListener('activate', event => {
                 return self.clients.matchAll({ type: 'window' }).then(clients => {
                     LOG('Activate: sending update notification to', clients.length, 'client(s)');
                     clients.forEach(c => {
-                        c.postMessage({ type: '__'+APP_NAME+'_SW_UPDATED' });
+                        c.postMessage({ type: '__'+MESSAGE_PREFIX+'_SW_UPDATED' });
                         LOG('Activate: notified client', c.id);
                     });
                     LOG('Update detected — notified', clients.length, 'client(s) to reload');
