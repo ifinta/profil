@@ -28,7 +28,7 @@ $DRY && exit 0
 
 # ── 2. Stamp CACHE_NAME into sw.js ───────────────────────────────────────────
 sed -i "s|.*var APP_VERSION =.*|var APP_VERSION = '${APP_VERSION}';|"  "${SW_FILE}"
-sed -i "s|.*APP_VERSION.*|                \"${APP_VERSION}\"|" "${FILTER_RS}"
+sed -i "s|.*APP_VERSION.*|                \"${APP_VERSION}\" // APP_VERSION|" "${FILTER_RS}"
 echo "Stamped ${SW_FILE} and ${FILTER_RS}"
 
 # ── 3. Build ──────────────────────────────────────────────────────────────────
